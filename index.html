@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="images/favicon.png">
 
 <!-- ===== ДЛЯ ПОИСКОВИКОВ ===== -->
 <title>The Lost Amp — рок-группа из Казани (бывшие The Loudspeakers)</title>
@@ -72,7 +73,16 @@ h2 {
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--line);
 }
-.nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+.nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand img { width: 40px; height: 40px; object-fit: contain; display: block; }
+.nav-right { display: flex; align-items: center; gap: 28px; }
+.lang {
+  background: none; cursor: pointer; font: inherit; font-size: 0.8rem; letter-spacing: 0.08em;
+  color: var(--text); border: 1px solid var(--line); padding: 5px 11px;
+  transition: border-color .2s;
+}
+.lang:hover, .lang:focus-visible { border-color: var(--accent); outline: none; }
 .nav-name { font-family: "Russo One", sans-serif; font-size: 1.45rem; line-height: 1; }
 .nav ul { display: flex; gap: 28px; list-style: none; font-size: 0.9rem; }
 .nav ul a { color: var(--muted); padding: 6px 0; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
@@ -106,7 +116,9 @@ h2 {
   line-height: 0.95;
   animation: appear 1.4s ease-out both;
 }
-.hero p { margin-top: 24px; color: var(--muted); font-size: 0.95rem; animation: appear 1.4s .4s ease-out both; }
+.hero .motto { margin-top: 28px; max-width: 24ch; font-family: "Russo One", sans-serif; font-size: clamp(1.25rem, 3.4vw, 2rem); line-height: 1.25; color: var(--text); animation: appear 1.4s .5s ease-out both; }
+.hero .motto span { color: var(--accent); }
+.hero .genre { margin-top: 20px; color: var(--muted); font-size: 0.95rem; animation: appear 1.4s .8s ease-out both; }
 .hero .rule { width: 64px; height: 1px; background: var(--accent); margin-top: 32px; animation: appear 1.4s .2s ease-out both; }
 
 @keyframes appear {
@@ -152,7 +164,8 @@ h2 {
 .timeline { list-style: none; }
 .timeline li { display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
 .timeline li:first-child { border-top: 1px solid var(--line); }
-.timeline time { color: var(--muted); }
+.timeline time { color: var(--accent); }
+.more-body .outro { margin-top: 40px; max-width: none; font-family: "Russo One", sans-serif; font-size: 1.25rem; line-height: 1.35; color: var(--text); }
 
 /* ===== РЕЛИЗЫ ===== */
 .releases { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 48px 32px; }
@@ -174,6 +187,8 @@ h2 {
 }
 .release:hover h3 { border-color: var(--accent); }
 .release p { font-size: 0.85rem; color: var(--muted); }
+.closing { margin-top: 112px; font-family: "Russo One", sans-serif; font-size: clamp(1.6rem, 5vw, 3rem); line-height: 1.15; color: var(--text); }
+.closing::before { content: ""; display: block; width: 64px; height: 1px; background: var(--accent); margin-bottom: 28px; }
 
 /* ===== КОНТАКТЫ (светлый блок) ===== */
 .contacts { background: var(--text); color: #1D1D1C; padding: 112px 0; }
@@ -193,9 +208,10 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 @media (max-width: 760px) {
   .about { grid-template-columns: 1fr; gap: 48px; }
   .section, .contacts { padding: 80px 0; }
-  .nav ul { gap: 18px; }
+  .nav-right { gap: 14px; }
+  .nav ul { gap: 14px; font-size: 0.85rem; }
   .nav-name { display: none; }
-  .nav .wrap { justify-content: center; }
+  .closing { margin-top: 80px; }
 }
 @media (max-width: 760px) {
   .more-body { grid-template-columns: 1fr; gap: 40px; }
@@ -203,7 +219,7 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) {
   .more-panel, .more-btn svg { transition: none; }
   html { scroll-behavior: auto; }
-  .hero h1, .hero p, .hero .rule { animation: none; }
+  .hero h1, .hero .motto, .hero .genre, .hero .rule { animation: none; }
 }
 </style>
 </head>
@@ -213,23 +229,30 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 <!-- ===== МЕНЮ ===== -->
 <nav class="nav">
   <div class="wrap">
-    <span class="nav-name">The Lost Amp</span>
-    <ul>
-      <li><a href="#about">О группе</a></li>
-      <li><a href="#releases">Релизы</a></li>
-      <li><a href="#contacts">Контакты</a></li>
-    </ul>
+    <a class="brand" href="#top" aria-label="The Lost Amp">
+      <img src="images/logo.png" alt="Логотип The Lost Amp" data-i18n-alt="logo.alt" onerror="this.style.display='none'">
+      <span class="nav-name">The Lost Amp</span>
+    </a>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#about" data-i18n="nav.about">О группе</a></li>
+        <li><a href="#releases" data-i18n="nav.releases">Релизы</a></li>
+        <li><a href="#contacts" data-i18n="nav.contacts">Контакты</a></li>
+      </ul>
+      <button class="lang" id="lang-btn" type="button" aria-label="Switch language">EN</button>
+    </div>
   </div>
 </nav>
 
 <!-- ===== ПЕРВЫЙ ЭКРАН ===== -->
-<header class="hero">
+<header class="hero" id="top">
   <!-- Фото положи в папку images и назови hero.jpg -->
-  <img src="images/hero.jpg" alt="Участники группы The Lost Amp" onerror="this.style.display='none'">
+  <img src="images/hero.jpg" alt="Участники группы The Lost Amp" data-i18n-alt="hero.alt" onerror="this.style.display='none'">
   <div class="wrap">
     <h1>The Lost Amp</h1>
     <div class="rule"></div>
-    <p>Альтернативный рок · Казань</p>
+    <p class="motto" data-i18n="hero.motto">Воплощение <span>гаражного духа</span> в звуке</p>
+    <p class="genre" data-i18n="hero.genre">Альтернативный рок · Казань</p>
   </div>
 </header>
 
@@ -239,17 +262,17 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 <section class="section" id="about">
   <div class="wrap about">
     <div>
-      <h2>О группе</h2>
-      <p>The Lost Amp — альтернативная рок-группа из Казани. Мы играем вместе с 2021 года, а до осени 2025 выступали под названием The Loudspeakers.</p>
-      <p>В 2025 году мы записали первые песни на студии Afir Music, а в октябре 2026 выпустили сингл «Ants» на собственном лейбле.</p>
+      <h2 data-i18n="about.title">О группе</h2>
+      <p data-i18n="about.p1">The Lost Amp — альтернативная рок-группа из Казани. Мы играем с 2021 года, но до осени 2025 нас знали как The Loudspeakers.</p>
+      <p data-i18n="about.p2">В 2025 году мы записали первые песни на студии Afir Music, а в октябре 2026 выпустили сингл «Ants» на собственном лейбле. Именно с этого и началась наша история.</p>
     </div>
     <div>
-      <h2>Состав</h2>
+      <h2 data-i18n="about.members">Состав</h2>
       <ul class="members">
-        <li><b>Артем Федоров</b> <span>бас-гитара, вокал</span></li>
-        <li><b>Адель Акберов</b> <span>ритм-гитара</span></li>
-        <li><b>Радель Фархутдинов</b> <span>соло-гитара</span></li>
-        <li><b>Шамиль Байбеков</b> <span>ударные</span></li>
+        <li><b data-i18n="m1.name">Артем Федоров</b> <span data-i18n="m1.role">бас-гитара, вокал</span></li>
+        <li><b data-i18n="m2.name">Адель Акберов</b> <span data-i18n="m2.role">ритм-гитара</span></li>
+        <li><b data-i18n="m3.name">Радель Фархутдинов</b> <span data-i18n="m3.role">соло-гитара</span></li>
+        <li><b data-i18n="m4.name">Шамиль Байбеков</b> <span data-i18n="m4.role">ударные</span></li>
       </ul>
     </div>
 
@@ -263,16 +286,20 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
         <div class="more-inner">
           <div class="more-body">
             <div>
-              <p>Группа появилась в 2021 году в Казани. Первые годы мы репетировали в гараже и копили материал, а на сцену вышли весной 2023-го. Играли на барных площадках города, делали акустические сеты и собирали собственную программу.</p>
-              <p>Осенью 2025 года мы записали первые песни на студии Afir Music и сменили название: прежнее уже использовал другой коллектив. Так The Loudspeakers стали The Lost Amp. Тексты большинства песен пишет Шамиль Байбеков, к некоторым приложили руку Адель и Артем.</p>
+              <p data-i18n="more.p1">Мы основали группу в 2021 году и начали с репетиций в гараже, постепенно собирая собственный материал. Весной 2023 года состоялся наш первый концерт. С тех пор мы выступали на площадках Казани, играли акустические сеты и готовили собственную программу.</p>
+              <p data-i18n="more.p2">В 2025 году мы записали первые синглы — «Commotion» и «Broken Glass» — при участии студии Afir Music. Тогда же сменили название с The Loudspeakers на The Lost Amp. В октябре 2026 года выпустили «Ants» на собственном лейбле.</p>
+              <p data-i18n="more.p3">Тексты большинства песен пишет Шамиль Байбеков. В работе над отдельными композициями также участвуют Адель Акберов и Артем Федоров.</p>
             </div>
-            <ul class="timeline">
-              <li><time>2021</time> Основали группу в Казани</li>
-              <li><time>2023</time> Первый концерт и акустический сет</li>
-              <li><time>2024</time> Собственный концерт и выступление на марафоне</li>
-              <li><time>2025</time> Первые записи, синглы «Commotion» и «Broken Glass», новое название</li>
-              <li><time>2026</time> Сингл «Ants» на собственном лейбле</li>
-            </ul>
+            <div>
+              <ul class="timeline">
+                <li><time>2021</time> <span data-i18n="t1">Основание группы The Loudspeakers в Казани.</span></li>
+                <li><time>2023</time> <span data-i18n="t2">Дебютное выступление и первые акустические сеты.</span></li>
+                <li><time>2024</time> <span data-i18n="t3">Сольный концерт в Казани и выступление на Казанском марафоне.</span></li>
+                <li><time>2025</time> <span data-i18n="t4">Выход синглов «Commotion» и «Broken Glass». The Loudspeakers становятся The Lost Amp.</span></li>
+                <li><time>2026</time> <span data-i18n="t5">Собственный лейбл и релиз сингла «Ants».</span></li>
+              </ul>
+              <p class="outro" data-i18n="outro">Дальше — громче.<br>Дальше — больше!</p>
+            </div>
           </div>
         </div>
       </div>
@@ -283,8 +310,9 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 <!-- ===== РЕЛИЗЫ ===== -->
 <section class="section" id="releases">
   <div class="wrap">
-    <h2>Релизы</h2>
+    <h2 data-i18n="releases.title">Релизы</h2>
     <div class="releases" id="release-list"></div>
+    <p class="closing" data-i18n="closing">И это только начало</p>
   </div>
 </section>
 
@@ -293,18 +321,18 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 <!-- ===== КОНТАКТЫ ===== -->
 <section class="contacts" id="contacts">
   <div class="wrap">
-    <h2>Контакты</h2>
-    <p>По вопросам выступлений и сотрудничества пишите нам на почту.</p>
+    <h2 data-i18n="contacts.title">Контакты</h2>
+    <p data-i18n="contacts.text">По вопросам выступлений и сотрудничества пишите нам на почту.</p>
     <a class="mail" href="mailto:baibekovshamil@gmail.com">baibekovshamil@gmail.com</a>
     <ul class="socials">
-      <li><a href="https://vk.ru/thelostamp" target="_blank" rel="noopener">ВКонтакте</a></li>
+      <li><a href="https://vk.ru/thelostamp" target="_blank" rel="noopener" data-i18n="contacts.vk">ВКонтакте</a></li>
       <li><a href="https://t.me/thelostamp" target="_blank" rel="noopener">Telegram</a></li>
     </ul>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">© 2026 The Lost Amp, Казань</div>
+  <div class="wrap" data-i18n="footer">© 2026 The Lost Amp, Казань</div>
 </footer>
 
 <script>
@@ -314,6 +342,7 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
    2. Вставь её в конец списка, перед закрывающей скобкой ]
    3. Поставь запятую в конце предыдущей строки
    4. Поменяй название, дату, обложку и ссылку
+   Тип пиши так: "Сингл", "Альбом" или "EP".
    Порядок строк не важен: сайт сам ставит свежие релизы первыми, ориентируясь на дату.
    Дата пишется так: год-месяц-день. */
 const releases = [
@@ -322,51 +351,125 @@ const releases = [
   { title: "Ants",         date: "2026-10-17", type: "Сингл", cover: "ants.jpg",         link: "https://band.link/inZwD" }
 ];
 
+/* ===== АНГЛИЙСКИЙ ПЕРЕВОД =====
+   Русский текст лежит прямо в разметке выше, а здесь его английская версия. */
+const EN = {
+  "title": "The Lost Amp — rock band from Kazan (formerly The Loudspeakers)",
+  "desc": "The Lost Amp (formerly The Loudspeakers) is an alternative rock band from Kazan. Listen to the singles “Ants”, “Broken Glass” and “Commotion”.",
+  "logo.alt": "The Lost Amp logo",
+  "hero.alt": "The Lost Amp band members",
+  "hero.motto": "The <span>garage spirit</span>, embodied in sound",
+  "hero.genre": "Alternative rock · Kazan",
+  "nav.about": "About", "nav.releases": "Releases", "nav.contacts": "Contacts",
+  "about.title": "About the band",
+  "about.p1": "The Lost Amp is an alternative rock band from Kazan. We have been playing together since 2021, but until autumn 2025 you knew us as The Loudspeakers.",
+  "about.p2": "In 2025 we recorded our first songs at Afir Music studio, and in October 2026 we released the single “Ants” on our own label. That is where our story truly began.",
+  "about.members": "Line-up",
+  "m1.name": "Artem Fedorov", "m1.role": "bass, vocals",
+  "m2.name": "Adel Akberov", "m2.role": "rhythm guitar",
+  "m3.name": "Radel Farkhutdinov", "m3.role": "lead guitar",
+  "m4.name": "Shamil Baibekov", "m4.role": "drums",
+  "more.p1": "We founded the band in 2021 and started with rehearsals in a garage, gradually building our own material. Our first show took place in spring 2023. Since then we have played venues across Kazan, performed acoustic sets and worked on our own program.",
+  "more.p2": "In 2025 we recorded our first singles, “Commotion” and “Broken Glass”, together with Afir Music studio. Around the same time we changed our name from The Loudspeakers to The Lost Amp. In October 2026 we released “Ants” on our own label.",
+  "more.p3": "Most of our lyrics are written by Shamil Baibekov. Adel Akberov and Artem Fedorov also contribute to some of the songs.",
+  "t1": "Founding of The Loudspeakers in Kazan.",
+  "t2": "Debut show and first acoustic sets.",
+  "t3": "Headline show in Kazan and a performance at the Kazan Marathon.",
+  "t4": "Release of the singles “Commotion” and “Broken Glass”. The Loudspeakers become The Lost Amp.",
+  "t5": "Our own label and the release of the single “Ants”.",
+  "outro": "Louder from here on.<br>Bigger from here on!",
+  "releases.title": "Releases",
+  "closing": "And this is only the beginning",
+  "contacts.title": "Contacts",
+  "contacts.text": "For shows and collaborations, send us an email.",
+  "contacts.vk": "VK",
+  "footer": "© 2026 The Lost Amp, Kazan"
+};
+const UI = {
+  ru: { moreOpen: "Чуть больше о нас", moreClose: "Свернуть", cover: "Обложка: ", types: {} },
+  en: { moreOpen: "A little more about us", moreClose: "Collapse", cover: "Cover: ",
+        types: { "Сингл": "Single", "Альбом": "Album" } }
+};
+
 /* Дальше трогать ничего не нужно */
+let lang = "ru";
 const list = document.getElementById("release-list");
-releases
-  .slice()
-  .sort((a, b) => b.date.localeCompare(a.date))
-  .forEach(r => {
-    const card = document.createElement("a");
-    card.className = "release";
-    card.href = r.link;
-    card.target = "_blank";
-    card.rel = "noopener";
+const btn = document.querySelector(".more-btn");
+const panel = document.querySelector(".more-panel");
+const inner = panel.querySelector(".more-inner");
+const label = btn.querySelector("span");
+const langBtn = document.getElementById("lang-btn");
+const metaDesc = document.querySelector('meta[name="description"]');
+const ruTitle = document.title, ruDesc = metaDesc.content;
 
-    const cover = document.createElement("div");
-    cover.className = "cover";
-    const img = document.createElement("img");
-    img.src = "images/" + r.cover;
-    img.alt = "Обложка: " + r.title;
-    img.onerror = () => { img.style.display = "none"; };
-    cover.appendChild(img);
+function renderReleases() {
+  list.innerHTML = "";
+  releases
+    .slice()
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .forEach(r => {
+      const card = document.createElement("a");
+      card.className = "release";
+      card.href = r.link;
+      card.target = "_blank";
+      card.rel = "noopener";
 
-    const h3 = document.createElement("h3");
-    h3.textContent = r.title;
-    const p = document.createElement("p");
-    p.textContent = r.type + ", " + r.date.slice(0, 4);
+      const cover = document.createElement("div");
+      cover.className = "cover";
+      const img = document.createElement("img");
+      img.src = "images/" + r.cover;
+      img.alt = UI[lang].cover + r.title;
+      img.onerror = () => { img.style.display = "none"; };
+      cover.appendChild(img);
 
-    card.append(cover, h3, p);
-    list.appendChild(card);
+      const h3 = document.createElement("h3");
+      h3.textContent = r.title;
+      const p = document.createElement("p");
+      p.textContent = (UI[lang].types[r.type] || r.type) + ", " + r.date.slice(0, 4);
+
+      card.append(cover, h3, p);
+      list.appendChild(card);
+    });
+}
+
+function updateMoreLabel() {
+  label.textContent = panel.classList.contains("open") ? UI[lang].moreClose : UI[lang].moreOpen;
+}
+
+function applyLang(next) {
+  lang = next;
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    if (el.dataset.ru === undefined) el.dataset.ru = el.innerHTML;
+    el.innerHTML = lang === "en" ? EN[el.dataset.i18n] : el.dataset.ru;
   });
-</script>
+  document.querySelectorAll("[data-i18n-alt]").forEach(el => {
+    if (el.dataset.ruAlt === undefined) el.dataset.ruAlt = el.alt;
+    el.alt = lang === "en" ? EN[el.dataset.i18nAlt] : el.dataset.ruAlt;
+  });
+  document.title = lang === "en" ? EN.title : ruTitle;
+  metaDesc.content = lang === "en" ? EN.desc : ruDesc;
+  langBtn.textContent = lang === "en" ? "RU" : "EN";
+  langBtn.setAttribute("aria-label", lang === "en" ? "Переключить на русский" : "Switch to English");
+  updateMoreLabel();
+  renderReleases();
+  try { localStorage.setItem("lang", lang); } catch (e) {}
+}
 
-<script>
+langBtn.addEventListener("click", () => applyLang(lang === "ru" ? "en" : "ru"));
+
 /* Выезжающий блок «Чуть больше о нас» */
-(function () {
-  const btn = document.querySelector(".more-btn");
-  const panel = document.querySelector(".more-panel");
-  const inner = panel.querySelector(".more-inner");
-  const label = btn.querySelector("span");
-  inner.inert = true; // пока блок закрыт, до его ссылок нельзя добраться клавишей Tab
-  btn.addEventListener("click", () => {
-    const open = panel.classList.toggle("open");
-    btn.setAttribute("aria-expanded", open);
-    inner.inert = !open;
-    label.textContent = open ? "Свернуть" : "Чуть больше о нас";
-  });
-})();
+inner.inert = true; // пока блок закрыт, до его ссылок нельзя добраться клавишей Tab
+btn.addEventListener("click", () => {
+  const open = panel.classList.toggle("open");
+  btn.setAttribute("aria-expanded", open);
+  inner.inert = !open;
+  updateMoreLabel();
+});
+
+let saved = "ru";
+try { saved = localStorage.getItem("lang") || "ru"; } catch (e) {}
+applyLang(saved === "en" ? "en" : "ru");
 </script>
 
 </body>
