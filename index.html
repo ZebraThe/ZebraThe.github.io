@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="icon" type="image/png" href="favicon.png">
 
 <!-- ===== ДЛЯ ПОИСКОВИКОВ ===== -->
 <title>The Lost Amp — рок-группа из Казани (бывшие The Loudspeakers)</title>
@@ -11,7 +11,7 @@
 <meta property="og:title" content="The Lost Amp — рок-группа из Казани">
 <meta property="og:description" content="Альтернативный рок из Казани. Бывшие The Loudspeakers.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="images/hero.jpg">
+<meta property="og:image" content="hero.jpg">
 
 <script type="application/ld+json">
 {
@@ -230,7 +230,7 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="The Lost Amp">
-      <img src="images/logo.png" alt="Логотип The Lost Amp" data-i18n-alt="logo.alt" onerror="this.style.display='none'">
+      <img src="logo.png" alt="Логотип The Lost Amp" data-i18n-alt="logo.alt" onerror="this.style.display='none'">
       <span class="nav-name">The Lost Amp</span>
     </a>
     <div class="nav-right">
@@ -246,8 +246,8 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 
 <!-- ===== ПЕРВЫЙ ЭКРАН ===== -->
 <header class="hero" id="top">
-  <!-- Фото положи в папку images и назови hero.jpg -->
-  <img src="images/hero.jpg" alt="Участники группы The Lost Amp" data-i18n-alt="hero.alt" onerror="this.style.display='none'">
+  <!-- Фото лежит рядом с index.html и называется hero.jpg -->
+  <img src="hero.jpg" alt="Участники группы The Lost Amp" data-i18n-alt="hero.alt" onerror="this.style.display='none'">
   <div class="wrap">
     <h1>The Lost Amp</h1>
     <div class="rule"></div>
@@ -417,7 +417,7 @@ function renderReleases() {
       const cover = document.createElement("div");
       cover.className = "cover";
       const img = document.createElement("img");
-      img.src = "images/" + r.cover;
+      img.src = r.cover;
       img.alt = UI[lang].cover + r.title;
       img.onerror = () => { img.style.display = "none"; };
       cover.appendChild(img);
