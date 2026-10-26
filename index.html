@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="120x120" href="/favicon-120.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <!-- ===== ДЛЯ ПОИСКОВИКОВ ===== -->
 <title>The Lost Amp — рок-группа из Казани (бывшие The Loudspeakers)</title>
@@ -81,7 +83,15 @@ h2 {
 }
 .nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 64px; }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand img { width: 40px; height: 40px; object-fit: contain; display: block; }
+.brand img { width: 40px; height: 40px; object-fit: contain; display: block; animation: logo-warm 3.4s ease-out .2s both; }
+@keyframes logo-warm {
+  0% { opacity: 0; filter: drop-shadow(0 0 0 rgba(217,185,60,0)); }
+  7% { opacity: .2; } 11% { opacity: 0; } 19% { opacity: .45; } 24% { opacity: .08; }
+  34% { opacity: .7; filter: drop-shadow(0 0 8px rgba(217,185,60,.7)); }
+  40% { opacity: .35; }
+  55% { opacity: .95; filter: drop-shadow(0 0 10px rgba(217,185,60,.6)); }
+  100% { opacity: 1; filter: drop-shadow(0 0 5px rgba(217,185,60,.25)); }
+}
 .nav-right { display: flex; align-items: center; gap: 28px; }
 .lang {
   background: none; cursor: pointer; font: inherit; font-size: 0.8rem; letter-spacing: 0.08em;
@@ -175,24 +185,26 @@ h2 {
 
 /* ===== РЕЛИЗЫ ===== */
 .releases { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 48px 32px; }
+.releases { align-items: start; }
 .release { display: block; }
-.cover {
-  position: relative; aspect-ratio: 1 / 1;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  overflow: hidden;
-}
+.cover { position: relative; display: block; aspect-ratio: 1 / 1; background: var(--panel); border: 1px solid var(--line); overflow: hidden; }
 .cover img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.92); transition: filter .3s; }
-.release:hover .cover img { filter: brightness(1.05); }
-.release h3 {
-  margin-top: 16px;
-  font-family: "Russo One", sans-serif; font-weight: 400; font-size: 1.1rem;
-  display: inline-block;
-  border-bottom: 1px solid transparent;
-  transition: border-color .2s;
-}
-.release:hover h3 { border-color: var(--accent); }
-.release p { font-size: 0.85rem; color: var(--muted); }
+.cover:hover img { filter: brightness(1.05); }
+.release h3 { margin-top: 16px; font-family: "Russo One", sans-serif; font-weight: 400; font-size: 1.1rem; }
+.release h3 a { display: inline-block; border-bottom: 1px solid transparent; transition: border-color .2s; }
+.release h3 a:hover { border-color: var(--accent); }
+.release .meta { font-size: 0.85rem; color: var(--muted); }
+.song-btn { background: none; border: 0; cursor: pointer; font: inherit; font-size: 0.85rem; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; padding: 4px 0; transition: color .2s; }
+.song-btn:hover, .song-btn:focus-visible { color: var(--text); }
+.song-btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+.song-btn span { border-bottom: 1px solid transparent; transition: border-color .2s; }
+.song-btn:hover span, .song-btn:focus-visible span { border-color: var(--accent); }
+.song-btn svg { width: 11px; height: 11px; transition: transform .4s ease; }
+.song-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.song-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s ease; }
+.song-panel.open { grid-template-rows: 1fr; }
+.song-inner { overflow: hidden; min-height: 0; }
+.song-inner p { padding-top: 10px; max-width: 34ch; font-size: 0.88rem; line-height: 1.6; color: var(--muted); }
 .closing { margin-top: 112px; font-family: "Russo One", sans-serif; font-size: clamp(1.6rem, 5vw, 3rem); line-height: 1.15; color: var(--text); }
 .closing::before { content: ""; display: block; width: 64px; height: 1px; background: var(--accent); margin-bottom: 28px; }
 
@@ -234,7 +246,8 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
   .more-body { grid-template-columns: 1fr; gap: 40px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .more-panel, .more-btn svg { transition: none; }
+  .more-panel, .more-btn svg, .song-panel, .song-btn svg { transition: none; }
+  .brand img { animation: none; }
   html { scroll-behavior: auto; }
   .hero h1, .hero .motto, .hero .genre, .hero .rule { animation: none; }
 }
@@ -281,7 +294,7 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
     <div>
       <h2 data-i18n="about.title">О группе</h2>
       <p data-i18n="about.p1">The Lost Amp — альтернативная рок-группа из Казани. Мы играем с 2021 года, но до осени 2025 нас знали как The Loudspeakers.</p>
-      <p data-i18n="about.p2">В 2025 году мы записали первые песни на студии Afir Music, а в октябре 2026 выпустили сингл «Ants» на собственном лейбле. Именно с этого и началась наша история.</p>
+      <p data-i18n="about.p2">В 2025 году мы записали первые песни на студии, а в октябре 2026 выпустили сингл «Ants». Именно с этого и началась наша история.</p>
     </div>
     <div>
       <h2 data-i18n="about.members">Состав</h2>
@@ -303,9 +316,9 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
         <div class="more-inner">
           <div class="more-body">
             <div>
-              <p data-i18n="more.p1">Мы основали группу в 2021 году и начали с репетиций в гараже, постепенно собирая собственный материал. Весной 2023 года состоялся наш первый концерт. С тех пор мы выступали на площадках Казани, играли акустические сеты и готовили собственную программу.</p>
-              <p data-i18n="more.p2">В 2025 году мы записали первые синглы — «Commotion» и «Broken Glass» — при участии студии Afir Music. Тогда же сменили название с The Loudspeakers на The Lost Amp. В октябре 2026 года выпустили «Ants» на собственном лейбле.</p>
-              <p data-i18n="more.p3">Тексты большинства песен пишет Шамиль Байбеков. В работе над отдельными композициями также участвуют Адель Акберов и Артем Федоров.</p>
+              <p data-i18n="more.p1">Мы основали группу в 2021 году и начали с репетиций в гараже, постепенно собирая собственный материал. Целью всего проекта было и является открытое самовыражение для людей и общества. Весной 2023 года состоялся наш первый концерт. С тех пор мы выступали на площадках Казани, играли акустические сеты и готовили собственную программу.</p>
+              <p data-i18n="more.p2">В 2025 году мы записали первые синглы — «Commotion» и «Broken Glass». Тогда же сменили название с The Loudspeakers на The Lost Amp. В октябре 2026 года выпустили «Ants», отразившую настроение всей группы.</p>
+              <p data-i18n="more.p3">Автором текстов большинства песен выступает Шамиль, однако в работе над отдельными композициями также участвуют Адель и Артем.</p>
             </div>
             <div>
               <ul class="timeline">
@@ -313,7 +326,7 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
                 <li><time>2023</time> <span data-i18n="t2">Дебютное выступление и первые акустические сеты.</span></li>
                 <li><time>2024</time> <span data-i18n="t3">Сольный концерт в Казани и выступление на Казанском марафоне.</span></li>
                 <li><time>2025</time> <span data-i18n="t4">Выход синглов «Commotion» и «Broken Glass». The Loudspeakers становятся The Lost Amp.</span></li>
-                <li><time>2026</time> <span data-i18n="t5">Собственный лейбл и релиз сингла «Ants».</span></li>
+                <li><time>2026</time> <span data-i18n="t5">Релиз сингла «Ants» как самостоятельный релиз.</span></li>
               </ul>
               <p class="outro" data-i18n="outro">Дальше — громче.<br>Дальше — больше!</p>
             </div>
@@ -360,12 +373,19 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
    3. Поставь запятую в конце предыдущей строки
    4. Поменяй название, дату, обложку и ссылку
    Тип пиши так: "Сингл", "Альбом" или "EP".
+   Строка note: короткий рассказ о песне (ru по-русски, en по-английски). Если рассказа нет, просто убери блок note.
    Порядок строк не важен: сайт сам ставит свежие релизы первыми, ориентируясь на дату.
    Дата пишется так: год-месяц-день. */
 const releases = [
-  { title: "Commotion",    date: "2025-10-19", type: "Сингл", cover: "commotion.jpg",    link: "https://band.link/W0Mbe" },
-  { title: "Broken Glass", date: "2025-11-21", type: "Сингл", cover: "broken-glass.jpg", link: "https://band.link/yfIgo" },
-  { title: "Ants",         date: "2026-10-17", type: "Сингл", cover: "ants.jpg",         link: "https://band.link/inZwD" }
+  { title: "Commotion",    date: "2025-10-19", type: "Сингл", cover: "commotion.jpg",    link: "https://band.link/W0Mbe",
+    note: { ru: "Первая песня, написанная группой, отличающаяся особой энергией. Её ненавидят абсолютно все участники группы.",
+            en: "The first song the band ever wrote, with a special kind of energy. Absolutely every member of the band hates it." } },
+  { title: "Broken Glass", date: "2025-11-21", type: "Сингл", cover: "broken-glass.jpg", link: "https://band.link/yfIgo",
+    note: { ru: "Лиричная и трагичная рефлексия об утрате близкого человека. Является особенно личной для участников проекта.",
+            en: "A lyrical and tragic reflection on the loss of a loved one. It is especially personal for the members of the band." } },
+  { title: "Ants",         date: "2026-10-17", type: "Сингл", cover: "ants.jpg",         link: "https://band.link/inZwD",
+    note: { ru: "Громкий и разрывающий душу трек, попытка создать что-то хаотичное, но при этом знакомое.",
+            en: "A loud, soul-tearing track, an attempt to create something chaotic yet familiar." } }
 ];
 
 /* ===== АНГЛИЙСКИЙ ПЕРЕВОД =====
@@ -380,20 +400,20 @@ const EN = {
   "nav.about": "About", "nav.releases": "Releases", "nav.contacts": "Contacts",
   "about.title": "About the band",
   "about.p1": "The Lost Amp is an alternative rock band from Kazan. We have been playing together since 2021, but until autumn 2025 you knew us as The Loudspeakers.",
-  "about.p2": "In 2025 we recorded our first songs at Afir Music studio, and in October 2026 we released the single “Ants” on our own label. That is where our story truly began.",
+  "about.p2": "In 2025 we recorded our first songs, and in October 2026 we released the single “Ants”. That is where our story truly began.",
   "about.members": "Line-up",
   "m1.name": "Artem Fedorov", "m1.role": "bass, vocals",
   "m2.name": "Adel Akberov", "m2.role": "rhythm guitar",
   "m3.name": "Radel Farkhutdinov", "m3.role": "lead guitar",
   "m4.name": "Shamil Baibekov", "m4.role": "drums",
-  "more.p1": "We founded the band in 2021 and started with rehearsals in a garage, gradually building our own material. Our first show took place in spring 2023. Since then we have played venues across Kazan, performed acoustic sets and worked on our own program.",
-  "more.p2": "In 2025 we recorded our first singles, “Commotion” and “Broken Glass”, together with Afir Music studio. Around the same time we changed our name from The Loudspeakers to The Lost Amp. In October 2026 we released “Ants” on our own label.",
-  "more.p3": "Most of our lyrics are written by Shamil Baibekov. Adel Akberov and Artem Fedorov also contribute to some of the songs.",
+  "more.p1": "We founded the band in 2021 and started with rehearsals in a garage, gradually building our own material. The aim of the whole project was, and remains, open self-expression for people and for society. Our first show took place in spring 2023. Since then we have played venues across Kazan, performed acoustic sets and worked on our own program.",
+  "more.p2": "In 2025 we recorded our first singles, “Commotion” and “Broken Glass”. Around the same time we changed our name from The Loudspeakers to The Lost Amp. In October 2026 we released “Ants”, a track that reflects the mood of the whole band.",
+  "more.p3": "Most of our lyrics are written by Shamil. Adel and Artem also contribute to some of the songs.",
   "t1": "Founding of The Loudspeakers in Kazan.",
   "t2": "Debut show and first acoustic sets.",
   "t3": "Headline show in Kazan and a performance at the Kazan Marathon.",
   "t4": "Release of the singles “Commotion” and “Broken Glass”. The Loudspeakers become The Lost Amp.",
-  "t5": "Our own label and the release of the single “Ants”.",
+  "t5": "Release of the single “Ants” as an independent release.",
   "outro": "Louder from here on.<br>Bigger from here on!",
   "releases.title": "Releases",
   "closing": "And this is only the beginning",
@@ -403,8 +423,8 @@ const EN = {
   "footer": "© 2026 The Lost Amp, Kazan"
 };
 const UI = {
-  ru: { moreOpen: "Чуть больше о нас", moreClose: "Свернуть", cover: "Обложка: ", types: {} },
-  en: { moreOpen: "A little more about us", moreClose: "Collapse", cover: "Cover: ",
+  ru: { moreOpen: "Чуть больше о нас", moreClose: "Свернуть", cover: "Обложка: ", song: "О песне", types: {} },
+  en: { moreOpen: "A little more about us", moreClose: "Collapse", cover: "Cover: ", song: "About the song",
         types: { "Сингл": "Single", "Альбом": "Album" } }
 };
 
@@ -425,26 +445,62 @@ function renderReleases() {
     .slice()
     .sort((a, b) => b.date.localeCompare(a.date))
     .forEach(r => {
-      const card = document.createElement("a");
+      const card = document.createElement("div");
       card.className = "release";
-      card.href = r.link;
-      card.target = "_blank";
-      card.rel = "noopener";
 
-      const cover = document.createElement("div");
-      cover.className = "cover";
+      const coverLink = document.createElement("a");
+      coverLink.className = "cover";
+      coverLink.href = r.link;
+      coverLink.target = "_blank";
+      coverLink.rel = "noopener";
+      coverLink.setAttribute("aria-label", r.title);
       const img = document.createElement("img");
       img.src = r.cover;
       img.alt = UI[lang].cover + r.title;
       img.onerror = () => { img.style.display = "none"; };
-      cover.appendChild(img);
+      coverLink.appendChild(img);
 
       const h3 = document.createElement("h3");
-      h3.textContent = r.title;
-      const p = document.createElement("p");
-      p.textContent = (UI[lang].types[r.type] || r.type) + ", " + r.date.slice(0, 4);
+      const titleLink = document.createElement("a");
+      titleLink.href = r.link;
+      titleLink.target = "_blank";
+      titleLink.rel = "noopener";
+      titleLink.textContent = r.title;
+      h3.appendChild(titleLink);
 
-      card.append(cover, h3, p);
+      const meta = document.createElement("p");
+      meta.className = "meta";
+      meta.textContent = (UI[lang].types[r.type] || r.type) + ", " + r.date.slice(0, 4);
+
+      card.append(coverLink, h3, meta);
+
+      if (r.note) {
+        const songBtn = document.createElement("button");
+        songBtn.type = "button";
+        songBtn.className = "song-btn";
+        songBtn.setAttribute("aria-expanded", "false");
+        const label = document.createElement("span");
+        label.textContent = UI[lang].song;
+        songBtn.appendChild(label);
+        songBtn.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M1 4.5 7 10l6-5.5"/></svg>');
+
+        const songPanel = document.createElement("div");
+        songPanel.className = "song-panel";
+        const songInner = document.createElement("div");
+        songInner.className = "song-inner";
+        songInner.inert = true;
+        const text = document.createElement("p");
+        text.textContent = r.note[lang] || r.note.ru;
+        songInner.appendChild(text);
+        songPanel.appendChild(songInner);
+
+        songBtn.addEventListener("click", () => {
+          const open = songPanel.classList.toggle("open");
+          songBtn.setAttribute("aria-expanded", open);
+          songInner.inert = !open;
+        });
+        card.append(songBtn, songPanel);
+      }
       list.appendChild(card);
     });
 }
