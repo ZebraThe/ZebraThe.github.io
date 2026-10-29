@@ -350,7 +350,7 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 .egg::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease;
   background: radial-gradient(circle at 40px 32px, rgba(217,185,60,.38), rgba(217,185,60,0) 240px),
-              radial-gradient(circle at 58% 58%, rgba(217,185,60,.07), rgba(217,185,60,0) 45%);
+              radial-gradient(circle at 50% 50%, rgba(217,185,60,.07), rgba(217,185,60,0) 45%);
 }
 .egg.glow::before { opacity: 1; }
 .egg button { background: none; border: 0; cursor: pointer; font: inherit; color: var(--muted); }
@@ -358,7 +358,7 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 .egg-close { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 16px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; opacity: .55; transition: opacity .2s, color .2s; }
 .egg-close:hover { opacity: 1; color: var(--accent); }
 
-.egg-eyes { position: absolute; left: 58%; top: 58%; transform: translate(-50%, -50%); display: flex; gap: clamp(26px, 5vw, 44px); padding: 28px; opacity: 0; animation: eyes-in 1.4s 1.1s ease forwards; transition: opacity .6s ease; }
+.egg-eyes { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; gap: clamp(26px, 5vw, 44px); padding: 28px; opacity: 0; animation: eyes-in 1.4s 1.1s ease forwards; transition: opacity .6s ease; }
 @keyframes eyes-in { from { opacity: 0; } to { opacity: 1; } }
 .egg-eyes i { display: block; position: relative; width: clamp(22px, 4vw, 34px); height: clamp(14px, 2.6vw, 22px); border-radius: 50%;
   background: radial-gradient(ellipse at center, #f2dc7a 0%, #D9B93C 55%, #8a6f12 100%);
@@ -389,6 +389,40 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
   .egg-eyes { animation: none; opacity: 1; }
   .egg-eyes i { animation: none; }
   .egg::before { transition: none; }
+}
+
+/* ===== ПАСХАЛКА: лапки в подвале и ушки ===== */
+.foot { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+.paws { display: flex; gap: 2px; margin: -8px 0; visibility: hidden; opacity: 0; transition: opacity .3s ease, visibility 0s .3s; }
+.paws.on { visibility: visible; opacity: 1; transition: opacity 1.6s ease, visibility 0s; }
+.paws.on.gone { opacity: 0; filter: blur(5px); transform: scale(1.25); transition: opacity 1.2s ease, filter 1.2s ease, transform 1.2s ease; }
+.paw { background: none; border: 0; cursor: pointer; padding: 8px 7px; color: #5f5e5a; line-height: 0; transition: color .15s ease, filter .15s ease; }
+.paw svg { width: 20px; height: 20px; display: block; }
+.paw-l svg { rotate: -14deg; }
+.paw-r svg { rotate: 14deg; }
+.paw:hover { color: #777670; }
+.paw:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+.paw.ok, .paw.lit { color: var(--accent); filter: drop-shadow(0 0 6px rgba(217,185,60,.75)); }
+.paw.shake { animation: paw-shake .38s ease; }
+@keyframes paw-shake { 0%, 100% { transform: none; } 20% { transform: translateX(-3px); } 40% { transform: translateX(3px); } 60% { transform: translateX(-2px); } 80% { transform: translateX(2px); } }
+
+.more { position: relative; }
+.egg-ears { position: absolute; top: 0; right: 12px; width: 64px; height: 36px; overflow: hidden; background: none; border: 0; padding: 0; cursor: pointer; color: var(--accent); display: block; }
+.egg-ears[hidden] { display: none; }
+.egg-ears svg { display: block; width: 64px; height: 36px; }
+.egg-ears.peek svg { animation: ears-peek 1.1s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes ears-peek { from { transform: translateY(-110%); } to { transform: none; } }
+.egg-ears:hover svg { filter: drop-shadow(0 0 5px rgba(217,185,60,.5)); }
+.egg-ears:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+.egg-ears .ear-l { transform-origin: 16px 9px; }
+.egg-ears .ear-r { transform-origin: 48px 9px; }
+.egg-ears.twitch .ear-l { animation: ear-twitch .75s ease-in-out; }
+.egg-ears.twitch .ear-r { animation: ear-twitch .75s .09s ease-in-out reverse; }
+@keyframes ear-twitch { 0%, 100% { transform: rotate(0); } 15% { transform: rotate(-17deg); } 35% { transform: rotate(9deg); } 55% { transform: rotate(-13deg); } 75% { transform: rotate(6deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .paws, .paws.on, .paws.on.gone { transition: none; }
+  .paw.shake { animation: none; color: #8a4a44; }
+  .egg-ears.peek svg, .egg-ears.twitch .ear-l, .egg-ears.twitch .ear-r { animation: none; }
 }
 </style>
 </head>
@@ -447,6 +481,8 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 
     <!-- ===== ВЫЕЗЖАЮЩИЙ БЛОК: чуть больше о нас ===== -->
     <div class="more">
+      <!-- Пасхалка, шаг 3: ушки появляются после лапок, нажатие открывает экран с глазами -->
+      <button class="egg-ears" id="egg-ears" type="button" hidden><svg viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><g class="ear-l"><path d="M5 2 L26 14 L10 30 Z" fill="var(--bg)"/><path d="M10 9 L19 14.5 L11 22 Z" stroke-opacity=".55"/></g><g class="ear-r"><path d="M59 2 L38 14 L54 30 Z" fill="var(--bg)"/><path d="M54 9 L45 14.5 L53 22 Z" stroke-opacity=".55"/></g><path d="M4 0 C5 10 17 14 32 14 C47 14 59 10 60 0 Z" fill="var(--bg)" stroke="none"/><path d="M4 0 C5 10 17 14 32 14 C47 14 59 10 60 0"/></svg></button>
       <button class="more-btn" type="button" aria-expanded="false" aria-controls="more-panel">
         <span>Чуть больше о нас</span>
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M1 4.5 7 10l6-5.5"/></svg>
@@ -546,7 +582,14 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 </section>
 
 <footer>
-  <div class="wrap" data-i18n="footer">© 2026 The Lost Amp, Казань</div>
+  <div class="wrap foot">
+    <span data-i18n="footer">© 2026 The Lost Amp, Казань</span>
+    <!-- Пасхалка, шаг 2: лапки появляются после 3 нажатий на логотип. Порядок: левая, правая, левая, левая, правая -->
+    <div class="paws" id="paws">
+      <button class="paw paw-l" id="paw-l" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12.2c-2.9 0-5.6 3.3-5.6 5.6 0 1.7 1.3 2.6 2.8 2.6 1 0 1.8-.5 2.8-.5s1.8.5 2.8.5c1.5 0 2.8-.9 2.8-2.6 0-2.3-2.7-5.6-5.6-5.6z"/><ellipse cx="5.2" cy="10.6" rx="1.9" ry="2.5" transform="rotate(-18 5.2 10.6)"/><ellipse cx="9.3" cy="6.3" rx="2" ry="2.7" transform="rotate(-6 9.3 6.3)"/><ellipse cx="14.7" cy="6.3" rx="2" ry="2.7" transform="rotate(6 14.7 6.3)"/><ellipse cx="18.8" cy="10.6" rx="1.9" ry="2.5" transform="rotate(18 18.8 10.6)"/></svg></button>
+      <button class="paw paw-r" id="paw-r" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12.2c-2.9 0-5.6 3.3-5.6 5.6 0 1.7 1.3 2.6 2.8 2.6 1 0 1.8-.5 2.8-.5s1.8.5 2.8.5c1.5 0 2.8-.9 2.8-2.6 0-2.3-2.7-5.6-5.6-5.6z"/><ellipse cx="5.2" cy="10.6" rx="1.9" ry="2.5" transform="rotate(-18 5.2 10.6)"/><ellipse cx="9.3" cy="6.3" rx="2" ry="2.7" transform="rotate(-6 9.3 6.3)"/><ellipse cx="14.7" cy="6.3" rx="2" ry="2.7" transform="rotate(6 14.7 6.3)"/><ellipse cx="18.8" cy="10.6" rx="1.9" ry="2.5" transform="rotate(18 18.8 10.6)"/></svg></button>
+    </div>
+  </div>
 </footer>
 
 <!-- Просмотр фото на весь экран (открывается по клику на фото в разделе «Что мы такое?») -->
@@ -915,8 +958,8 @@ if (heroPic && !reduceMotion) {
 
 /* ===== ПАСХАЛКА: 3 нажатия на логотип → темнота → глаза → фото ===== */
 const EGG_UI = {
-  ru: { eyes: "Глаза в темноте. Нажмите", close: "Закрыть", photo: "Фото кота" },
-  en: { eyes: "Eyes in the dark. Press", close: "Close", photo: "Photo of the cat" }
+  ru: { eyes: "Глаза в темноте. Нажмите", close: "Закрыть", photo: "Фото кота", pawL: "Левая лапка", pawR: "Правая лапка", ears: "Кошачьи ушки. Нажмите" },
+  en: { eyes: "Eyes in the dark. Press", close: "Close", photo: "Photo of the cat", pawL: "Left paw", pawR: "Right paw", ears: "Cat ears. Press" }
 };
 const egg = document.getElementById("egg");
 const eggClose = document.getElementById("egg-close");
@@ -924,6 +967,12 @@ const eggEyes = document.getElementById("egg-eyes");
 const eggCard = document.getElementById("egg-card");
 const eggImg = document.getElementById("egg-img");
 const logoPic = document.querySelector(".brand img");
+const paws = document.getElementById("paws");
+const pawBtns = { l: document.getElementById("paw-l"), r: document.getElementById("paw-r") };
+const ears = document.getElementById("egg-ears");
+const PAW_SEQ = ["l", "r", "l", "l", "r"]; // левая, правая, левая, левая, правая
+let eggStage = 0;   // 0 — ничего не найдено, 1 — видны лапки, 2 — видны ушки (хранится только до перезагрузки страницы)
+let pawPos = 0, pawBusy = false, earsBusy = false;
 let eggTaps = [], eggFocus = null, eggTimer = null;
 
 function updateEggTexts() {
@@ -932,23 +981,87 @@ function updateEggTexts() {
   eggClose.setAttribute("aria-label", t.close);
   eggEyes.setAttribute("aria-label", t.eyes);
   eggImg.alt = t.photo;
+  pawBtns.l.setAttribute("aria-label", t.pawL);
+  pawBtns.r.setAttribute("aria-label", t.pawR);
+  ears.setAttribute("aria-label", t.ears);
 }
-function startEgg() {
-  if (!egg.hidden || eggTimer) return;
-  eggFocus = document.activeElement;
+/* Шаг 1: три нажатия на логотип → мигание → появляются лапки */
+function beginEgg() {
+  if (eggTimer) return;
   if (!reduceMotion) {
     logoPic.style.animation = "none"; void logoPic.offsetWidth;
     logoPic.style.animation = "logo-flicker 1.1s ease-out both";
   }
   eggTimer = setTimeout(() => {
     eggTimer = null;
-    egg.hidden = false;
-    egg.classList.remove("revealed", "glow");
-    eggCard.hidden = true;
-    document.body.style.overflow = "hidden";
-    requestAnimationFrame(() => requestAnimationFrame(() => egg.classList.add("glow")));
-    eggEyes.focus();
-  }, reduceMotion ? 0 : 1000);
+    eggStage = 1;
+    pawPos = 0;
+    paws.classList.add("on");
+  }, reduceMotion ? 0 : 1100);
+}
+
+/* Шаг 2: лапки в подвале */
+function shakePaws() {
+  [pawBtns.l, pawBtns.r].forEach(b => {
+    b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
+    setTimeout(() => b.classList.remove("shake"), 420);
+  });
+}
+function pawPress(side) {
+  if (eggStage !== 1 || pawBusy) return;
+  const btn = pawBtns[side];
+  if (side !== PAW_SEQ[pawPos]) { pawPos = 0; shakePaws(); return; }   // ошибка: всё сначала
+  pawPos++;
+  if (pawPos < PAW_SEQ.length) {
+    btn.classList.add("ok");
+    setTimeout(() => btn.classList.remove("ok"), 260);
+  } else {
+    finishPaws();
+  }
+}
+function finishPaws() {
+  pawBusy = true;
+  const wait = ms => reduceMotion ? 0 : ms;
+  pawBtns.l.classList.add("lit"); pawBtns.r.classList.add("lit");
+  setTimeout(() => {
+    paws.classList.add("gone");
+    setTimeout(() => {
+      paws.classList.remove("on", "gone");
+      pawBtns.l.classList.remove("lit"); pawBtns.r.classList.remove("lit");
+      eggStage = 2;
+      showEars();
+    }, wait(1300));
+  }, wait(800));
+}
+pawBtns.l.addEventListener("click", () => pawPress("l"));
+pawBtns.r.addEventListener("click", () => pawPress("r"));
+
+/* Шаг 3: ушки в блоке «Чуть больше о нас» → дёргаются → экран с глазами */
+function showEars() {
+  ears.hidden = false;
+  ears.classList.remove("peek"); void ears.offsetWidth; ears.classList.add("peek");
+}
+ears.addEventListener("click", () => {
+  if (earsBusy) return;
+  earsBusy = true;
+  ears.classList.remove("twitch"); void ears.offsetWidth; ears.classList.add("twitch");
+  setTimeout(() => {
+    ears.classList.remove("twitch");
+    earsBusy = false;
+    openEgg();
+  }, reduceMotion ? 0 : 800);
+});
+
+/* Экран пасхалки: темнота, глаза, фото (внутри ничего не менялось) */
+function openEgg() {
+  if (!egg.hidden) return;
+  eggFocus = document.activeElement;
+  egg.hidden = false;
+  egg.classList.remove("revealed", "glow");
+  eggCard.hidden = true;
+  document.body.style.overflow = "hidden";
+  requestAnimationFrame(() => requestAnimationFrame(() => egg.classList.add("glow")));
+  eggEyes.focus();
 }
 function revealEgg() {
   egg.classList.add("revealed");
@@ -959,14 +1072,14 @@ function closeEgg() {
   egg.hidden = true;
   egg.classList.remove("revealed", "glow");
   document.body.style.overflow = "";
-  logoPic.style.animation = "";
   if (eggFocus && eggFocus.focus) eggFocus.focus();
 }
 document.querySelector(".brand").addEventListener("click", e => {
+  if (eggStage !== 0 || eggTimer) return;   // пасхалка уже начата, логотип работает как обычная ссылка
   const now = Date.now();
   eggTaps = eggTaps.filter(t => now - t < 1500);
   eggTaps.push(now);
-  if (eggTaps.length >= 3) { eggTaps = []; e.preventDefault(); startEgg(); }
+  if (eggTaps.length >= 3) { eggTaps = []; e.preventDefault(); beginEgg(); }
 });
 eggEyes.addEventListener("click", revealEgg);
 eggClose.addEventListener("click", closeEgg);
