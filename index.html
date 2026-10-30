@@ -223,14 +223,14 @@ h2 {
 }
 .lb[hidden] { display: none; }
 @keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
-.lb button { background: none; border: 0; cursor: pointer; font: inherit; color: var(--muted); transition: color .2s; }
-.lb button:hover { color: var(--accent); }
+.lb button { background: none; border: 0; cursor: pointer; font: inherit; color: var(--accent); opacity: .85; transition: opacity .2s, filter .2s; }
+.lb button:hover { opacity: 1; filter: drop-shadow(0 0 6px rgba(217,185,60,.6)); }
 .lb button:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
 .lb-fig { display: flex; flex-direction: column; align-items: center; min-width: 0; }
 .lb-fig img { max-width: 100%; max-height: calc(100vh - 150px); object-fit: contain; border: 1px solid var(--line); animation: lb-fade .35s ease both; }
 .lb-fig figcaption { display: flex; justify-content: space-between; gap: 24px; width: 100%; max-width: 720px; margin-top: 14px; font-size: .85rem; color: var(--muted); }
 .lb-nav { height: 120px; display: flex; align-items: center; justify-content: center; }
-.lb-nav svg { width: 14px; height: 24px; }
+.lb-nav svg { width: 18px; height: 30px; }
 .lb-close { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 16px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
 
 /* ===== РЕЛИЗЫ ===== */
@@ -594,13 +594,13 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 
 <!-- Просмотр фото на весь экран (открывается по клику на фото в разделе «Что мы такое?») -->
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Просмотр фото">
-  <button class="lb-close" id="lb-close" type="button" aria-label="Закрыть"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M2 2l14 14M16 2L2 16"/></svg></button>
-  <button class="lb-nav" id="lb-prev" type="button" aria-label="Назад"><svg viewBox="0 0 14 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M12 1 2 12l10 11"/></svg></button>
+  <button class="lb-close" id="lb-close" type="button" aria-label="Закрыть"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 2l14 14M16 2L2 16"/></svg></button>
+  <button class="lb-nav" id="lb-prev" type="button" aria-label="Назад"><svg viewBox="0 0 14 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 1 2 12l10 11"/></svg></button>
   <figure class="lb-fig">
     <img id="lb-img" alt="">
     <figcaption><span id="lb-cap"></span><span id="lb-count"></span></figcaption>
   </figure>
-  <button class="lb-nav" id="lb-next" type="button" aria-label="Вперёд"><svg viewBox="0 0 14 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M2 1l10 11L2 23"/></svg></button>
+  <button class="lb-nav" id="lb-next" type="button" aria-label="Вперёд"><svg viewBox="0 0 14 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 1l10 11L2 23"/></svg></button>
 </div>
 
 <!-- Пасхалка: открывается тремя быстрыми нажатиями на логотип в меню. Фото: sanders.jpg в корне репозитория -->
