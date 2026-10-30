@@ -337,47 +337,6 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 /* 4. Фото становятся цветными, когда доезжают до середины экрана */
 .us-shot.lit img { filter: none; transform: scale(1.02); }
 
-/* ===== ПАСХАЛКА ===== */
-@keyframes logo-flicker {
-  0% { opacity: 1; filter: drop-shadow(0 0 5px rgba(217,185,60,.25)); }
-  10% { opacity: .15; } 20% { opacity: 1; filter: drop-shadow(0 0 16px rgba(217,185,60,.95)); }
-  32% { opacity: .25; } 44% { opacity: 1; filter: drop-shadow(0 0 22px rgba(217,185,60,1)); }
-  60% { opacity: .5; } 100% { opacity: 1; filter: drop-shadow(0 0 30px rgba(217,185,60,1)); }
-}
-.egg { position: fixed; inset: 0; z-index: 60; background: #0b0b0a; display: grid; place-items: center; animation: egg-dark .9s ease both; }
-.egg[hidden] { display: none; }
-@keyframes egg-dark { from { opacity: 0; } to { opacity: 1; } }
-.egg::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease;
-  background: radial-gradient(circle at 40px 32px, rgba(217,185,60,.38), rgba(217,185,60,0) 240px),
-              radial-gradient(circle at 50% 50%, rgba(217,185,60,.07), rgba(217,185,60,0) 45%);
-}
-.egg.glow::before { opacity: 1; }
-.egg button { background: none; border: 0; cursor: pointer; font: inherit; color: var(--muted); }
-.egg button:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
-.egg-close { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 16px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; opacity: .55; transition: opacity .2s, color .2s; }
-.egg-close:hover { opacity: 1; color: var(--accent); }
-
-.egg-eyes { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; gap: clamp(26px, 5vw, 44px); padding: 28px; opacity: 0; animation: eyes-in 1.4s 1.1s ease forwards; transition: opacity .6s ease; }
-@keyframes eyes-in { from { opacity: 0; } to { opacity: 1; } }
-.egg-eyes i { display: block; position: relative; width: clamp(22px, 4vw, 34px); height: clamp(14px, 2.6vw, 22px); border-radius: 50%;
-  background: radial-gradient(ellipse at center, #f2dc7a 0%, #D9B93C 55%, #8a6f12 100%);
-  box-shadow: 0 0 18px 4px rgba(217,185,60,.45); animation: blink 5s 2.6s infinite; }
-.egg-eyes i:first-child { rotate: 8deg; }
-.egg-eyes i:last-child { rotate: -8deg; }
-.egg-eyes i::after { content: ""; position: absolute; left: 50%; top: 6%; bottom: 6%; width: 22%; transform: translateX(-50%); background: #0b0b0a; border-radius: 50%; }
-@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.08); } }
-.egg.revealed .egg-eyes { opacity: 0 !important; animation: none; pointer-events: none; }
-
-.egg-card { position: relative; width: min(86vw, 360px, calc((100vh - 200px) * .75)); text-align: center; opacity: 0; animation: card-in 1.4s .4s ease forwards; }
-.egg-card[hidden] { display: none; }
-@keyframes card-in { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
-.egg-photo { aspect-ratio: 3 / 4; border: 1px solid var(--line); overflow: hidden; background: var(--panel); box-shadow: 0 0 60px rgba(217,185,60,.16); }
-.egg-photo img { width: 100%; height: 100%; object-fit: cover; display: block; animation: lb-fade .6s ease both; }
-.egg-text { margin-top: 16px; font-size: 1rem; color: var(--muted); line-height: 1.5; }
-.egg-text::before { content: ""; display: block; width: 48px; height: 1px; background: var(--accent); margin: 0 auto 16px; }
-.egg-big { display: block; font-family: "Russo One", sans-serif; font-size: clamp(1.3rem, 4vw, 1.7rem); line-height: 1.2; color: var(--text); margin-bottom: 8px; }
-
 @media (max-width: 760px) {
   .hero img { animation-name: hero-breathe-m; translate: none; }
   .anim .us-row .us-shot.reveal, .anim .us-row.rev .us-shot.reveal { transform: translateY(26px); }
@@ -385,45 +344,10 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 @keyframes hero-breathe-m { from { scale: 1; } to { scale: 1.04; } }
 @media (prefers-reduced-motion: reduce) {
   .hero img { animation: none; scale: none; translate: none; will-change: auto; }
-  .egg, .egg-card, .egg-photo img { animation: none; opacity: 1; }
-  .egg-eyes { animation: none; opacity: 1; }
-  .egg-eyes i { animation: none; }
-  .egg::before { transition: none; }
 }
 
-/* ===== ПАСХАЛКА: лапки в подвале и ушки ===== */
 .foot { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
-.paws { display: flex; gap: 2px; margin: -8px 0; visibility: hidden; opacity: 0; transition: opacity .3s ease, visibility 0s .3s; }
-.paws.on { visibility: visible; opacity: 1; transition: opacity 1.6s ease, visibility 0s; }
-.paws.on.gone { opacity: 0; filter: blur(5px); transform: scale(1.25); transition: opacity 1.2s ease, filter 1.2s ease, transform 1.2s ease; }
-.paw { background: none; border: 0; cursor: pointer; padding: 8px 7px; color: #5f5e5a; line-height: 0; transition: color .15s ease, filter .15s ease; }
-.paw svg { width: 20px; height: 20px; display: block; }
-.paw-l svg { rotate: -14deg; }
-.paw-r svg { rotate: 14deg; }
-.paw:hover { color: #777670; }
-.paw:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
-.paw.ok, .paw.lit { color: var(--accent); filter: drop-shadow(0 0 6px rgba(217,185,60,.75)); }
-.paw.shake { animation: paw-shake .38s ease; }
-@keyframes paw-shake { 0%, 100% { transform: none; } 20% { transform: translateX(-3px); } 40% { transform: translateX(3px); } 60% { transform: translateX(-2px); } 80% { transform: translateX(2px); } }
-
 .more { position: relative; }
-.egg-ears { position: absolute; top: 0; right: 12px; width: 64px; height: 36px; overflow: hidden; background: none; border: 0; padding: 0; cursor: pointer; color: var(--accent); display: block; }
-.egg-ears[hidden] { display: none; }
-.egg-ears svg { display: block; width: 64px; height: 36px; }
-.egg-ears.peek svg { animation: ears-peek 1.1s cubic-bezier(.2,.8,.2,1) both; }
-@keyframes ears-peek { from { transform: translateY(-110%); } to { transform: none; } }
-.egg-ears:hover svg { filter: drop-shadow(0 0 5px rgba(217,185,60,.5)); }
-.egg-ears:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
-.egg-ears .ear-l { transform-origin: 16px 9px; }
-.egg-ears .ear-r { transform-origin: 48px 9px; }
-.egg-ears.twitch .ear-l { animation: ear-twitch .75s ease-in-out; }
-.egg-ears.twitch .ear-r { animation: ear-twitch .75s .09s ease-in-out reverse; }
-@keyframes ear-twitch { 0%, 100% { transform: rotate(0); } 15% { transform: rotate(-17deg); } 35% { transform: rotate(9deg); } 55% { transform: rotate(-13deg); } 75% { transform: rotate(6deg); } }
-@media (prefers-reduced-motion: reduce) {
-  .paws, .paws.on, .paws.on.gone { transition: none; }
-  .paw.shake { animation: none; color: #8a4a44; }
-  .egg-ears.peek svg, .egg-ears.twitch .ear-l, .egg-ears.twitch .ear-r { animation: none; }
-}
 </style>
 </head>
 
@@ -481,8 +405,6 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 
     <!-- ===== ВЫЕЗЖАЮЩИЙ БЛОК: чуть больше о нас ===== -->
     <div class="more">
-      <!-- Пасхалка, шаг 3: ушки появляются после лапок, нажатие открывает экран с глазами -->
-      <button class="egg-ears" id="egg-ears" type="button" hidden><svg viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><g class="ear-l"><path d="M5 2 L26 14 L10 30 Z" fill="var(--bg)"/><path d="M10 9 L19 14.5 L11 22 Z" stroke-opacity=".55"/></g><g class="ear-r"><path d="M59 2 L38 14 L54 30 Z" fill="var(--bg)"/><path d="M54 9 L45 14.5 L53 22 Z" stroke-opacity=".55"/></g><path d="M4 0 C5 10 17 14 32 14 C47 14 59 10 60 0 Z" fill="var(--bg)" stroke="none"/><path d="M4 0 C5 10 17 14 32 14 C47 14 59 10 60 0"/></svg></button>
       <button class="more-btn" type="button" aria-expanded="false" aria-controls="more-panel">
         <span>Чуть больше о нас</span>
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M1 4.5 7 10l6-5.5"/></svg>
@@ -584,11 +506,6 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
 <footer>
   <div class="wrap foot">
     <span data-i18n="footer">© 2026 The Lost Amp, Казань</span>
-    <!-- Пасхалка, шаг 2: лапки появляются после 3 нажатий на логотип. Порядок: левая, правая, левая, левая, правая -->
-    <div class="paws" id="paws">
-      <button class="paw paw-l" id="paw-l" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12.2c-2.9 0-5.6 3.3-5.6 5.6 0 1.7 1.3 2.6 2.8 2.6 1 0 1.8-.5 2.8-.5s1.8.5 2.8.5c1.5 0 2.8-.9 2.8-2.6 0-2.3-2.7-5.6-5.6-5.6z"/><ellipse cx="5.2" cy="10.6" rx="1.9" ry="2.5" transform="rotate(-18 5.2 10.6)"/><ellipse cx="9.3" cy="6.3" rx="2" ry="2.7" transform="rotate(-6 9.3 6.3)"/><ellipse cx="14.7" cy="6.3" rx="2" ry="2.7" transform="rotate(6 14.7 6.3)"/><ellipse cx="18.8" cy="10.6" rx="1.9" ry="2.5" transform="rotate(18 18.8 10.6)"/></svg></button>
-      <button class="paw paw-r" id="paw-r" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12.2c-2.9 0-5.6 3.3-5.6 5.6 0 1.7 1.3 2.6 2.8 2.6 1 0 1.8-.5 2.8-.5s1.8.5 2.8.5c1.5 0 2.8-.9 2.8-2.6 0-2.3-2.7-5.6-5.6-5.6z"/><ellipse cx="5.2" cy="10.6" rx="1.9" ry="2.5" transform="rotate(-18 5.2 10.6)"/><ellipse cx="9.3" cy="6.3" rx="2" ry="2.7" transform="rotate(-6 9.3 6.3)"/><ellipse cx="14.7" cy="6.3" rx="2" ry="2.7" transform="rotate(6 14.7 6.3)"/><ellipse cx="18.8" cy="10.6" rx="1.9" ry="2.5" transform="rotate(18 18.8 10.6)"/></svg></button>
-    </div>
   </div>
 </footer>
 
@@ -602,17 +519,6 @@ footer { padding: 28px 0; font-size: 0.8rem; color: var(--muted); }
   </figure>
   <button class="lb-nav" id="lb-next" type="button" aria-label="Вперёд"><svg viewBox="0 0 14 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 1l10 11L2 23"/></svg></button>
 </div>
-
-<!-- Пасхалка: открывается тремя быстрыми нажатиями на логотип в меню. Фото: sanders.jpg в корне репозитория -->
-<div class="egg" id="egg" hidden role="dialog" aria-modal="true">
-  <button class="egg-close" id="egg-close" type="button"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M2 2l14 14M16 2L2 16"/></svg></button>
-  <button class="egg-eyes" id="egg-eyes" type="button"><i></i><i></i></button>
-  <figure class="egg-card" id="egg-card" hidden>
-    <div class="egg-photo"><img id="egg-img" src="sanders.jpg" alt=""></div>
-    <figcaption class="egg-text" data-i18n="egg.text"><span class="egg-big">Лучший на свете кот.</span> Спасибо что делал мою жизнь лучше.</figcaption>
-  </figure>
-</div>
-
 <script>
 /* ===== СПИСОК РЕЛИЗОВ =====
    Чтобы добавить новый релиз:
@@ -670,7 +576,6 @@ const EN = {
   "us.p4": "For us, music is a way to express what is hard to put into words, to share our emotions and, perhaps, to stir something inside you.",
   "us.big": "We simply do what we feel.",
   "us.sub": "How you take it is up to you.",
-  "egg.text": "<span class=\"egg-big\">The best cat in the world.</span> Thank you for making my life better.",
   "releases.title": "Releases",
   "closing": "And this is only the beginning",
   "contacts.title": "Contacts",
@@ -865,7 +770,7 @@ function applyLang(next) {
   langBtn.setAttribute("aria-label", lang === "en" ? "Переключить на русский" : "Switch to English");
   updateMoreLabel();
   updateUsTexts();
-  updateEggTexts();
+  U.forEach(f => f());
   renderReleases();
   try { localStorage.setItem("lang", lang); } catch (e) {}
 }
@@ -956,144 +861,192 @@ if (heroPic && !reduceMotion) {
   }, { passive: true });
 }
 
-/* ===== ПАСХАЛКА: 3 нажатия на логотип → темнота → глаза → фото ===== */
-const EGG_UI = {
-  ru: { eyes: "Глаза в темноте. Нажмите", close: "Закрыть", photo: "Фото кота", pawL: "Левая лапка", pawR: "Правая лапка", ears: "Кошачьи ушки. Нажмите" },
-  en: { eyes: "Eyes in the dark. Press", close: "Close", photo: "Photo of the cat", pawL: "Left paw", pawR: "Right paw", ears: "Cat ears. Press" }
+const U = [];
+const Q = [
+  "TkdQ/a3gouGMt8Si8bf+sfegvRIY47b937Dwsde11L3M/LngixH937DzsOK1373E/Y/giuGXTk9Ssfq19E2gmuKA4oL857DxsdG10bzy/L4Q4o",
+  "z910E1CBMtFA9cDeO147H917HPsd+047z8DeOzEuCst9Si0LbqT2dQDRLgoBFECQUXGUkNFQAcDeKL4oT90bHKsOVFsO+gk+KL47393bHMQbfS",
+  "sd2hpeKI47X857HMsdW10b3N/Y/gguCiR7HAsdK04bzx/YrhvRH86rDwsdm10r3ODeKK4o/907HCT21FQU2guOOx4or930Gi3LbmsdugkOKOEu",
+  "CqtuOi30q0473ODeKP4o/927HHsdq07rzy/L4cEuGStuGi2bbtsdaglRLgjuGQt9RSsOq0473O/LAQ47X917HLsdxFsdVQ/LPgiOGdt9ei2Ue0",
+  "5rzy/YwcEuCiR7Dzsdm10L3F/LLhsRH92rHMsdW04rz+DeKH4oH877HKsOO04b3O/YDgguGQt9yj4rbrQbzx/LDhsuGTt9uj4klvQU1QaBINEk",
+  "oNCwAcBl1FSURQEAwQEENYRUEOQUUAD09cDUBVVkROAltSFRUQBEIWTF5DVx0NCw4VDl1FXQQdShLgieGTt9Ki37bnsdWgkuKADB0NDw4dChRf",
+  "QTYtDU8QGB4nBA4cEhNFEwgUWFFVEgwNIk8ABAMQAghcDV5fVV59DgJSXEcgTwEfSl0LOFJCCRIGQTctLjk/DQ8QEEReSgkdDAJLCx0XDwk6UV",
+  "5DFBVSMiI0QVBQdhBcEB0NRRNQTUdHDU9cDRBcEB0NRRNQPFxFQU1fAhLgieGYt9Oi0bbqTU2gkuOw4oH91bHCsOhJQb3L/YfggOGdtu5eQbfe",
+  "sdign+KA474BR7HNsOe10b3C/YLhvTtOCA8BFUcxQVBQVjgQEENYRVtSGm1FQU8VVFdDEAsNRbHhsdy10b3H/YIQ4oMNtuOi1LfZsdCgk+Oy4o",
+  "QDR7Hvsde1173M/YrhsOGYRU14QUdHAgEfXlcSCBEPt/ai0bffsO2hpuOy470PS2tSQUUVCQIEQhAKEhP9w7HMsOW1302gl+KO47P910Nea0dF",
+  "Qx0RWn4SCBEPt/qi1LfXsd2hohLgieGdt96i27fVQ0F6DRISQlBaNUNIQUW1/rzw/YLggOGdtu5Ssdy10b3P/YjgghMBbUFSQwIEEx5SFxIS4q",
+  "v92bD6sde05rz8/YoQ47L877HIsd9LQb3t/YLghOGRt9mj47fQQ0F6DRISRlRVE0NIQUVZEh0RQxJTXlBeFFwuQwICBkASRFVsEA/9/LDxsOC0",
+  "6b3I/YsQ4oz910Gj4LfXsdihr+KFEuGXt9+j40lZTh4ATFwOEuGMt96i0bbksdWgnOKOEuCqtuOi30e11b3F/YngguGWR7HOsdm0702gm+KI4o",
+  "b92rD+QbfesO6hquO44oQDRWtSHEtvQU8VQxAKEkonR0FQBB4AEk9KDRB1S1ReRwgcQRMNBE0UTEBbHBF9FQQBEkVJa01QD1FcXUJIRVtSQyQJ",
+  "Dh4VDx46EhEPFwkdFQhHW01SfVpfRl4NCAdSFQ8AQQ4RWRAcOBENRRETFitHW01SYVdWRhFdBhZQTW1FQU8ATEViEAsNRTMbBg8RQR0RWhAcOB",
+  "ENRQQTExRHW01SblNEElRMFRJcQTcXBB4DDx46EhEPEwQKFUVfQU9MXkJRXBFOCwABElo5QwgXSh9SW1ZxRV8mCQJFAwgDWRJTU0UNDg9SFQ8A",
+  "QRofX15UHA0CFBETD1lFNQURQ1kQS15YRwcdE0cIAAYZQ1UQX0gNCwgUBEcHBBkESEAeEDsNGmsPWm0GDgMDWRJzYWINWkESIQwAGAsCTF9VQR",
+  "FBCAYdTAEJCA4bSEAQSTsNR1FXQRxFDh0RTltESwsNVlpSBw4JFQgCFxJUQF5dShIaAAMKFkVADQIQB0FVRxMVAwZNU1xHAQMIBx0bV01cU1JM",
+  "SFZQUDgQEgAdQkEJQQgVAA4ZWUsKEh8cUlpSHEdXUUhQVhJfQlBODhULW0dUWk0WRF5EV0MXRwUADhdIEgURSV1HGgENV0FDVxcdQR8XT1MYAA",
+  "AaS1BKVEtTUUFeFAcZGwoNGmtSQVRXRE0LDV1AU1JEExhIQUlXVFZQUBIEBhQNHEEdEQYGCBkJFxIBCRFLDg0GBBVfQQkCQkIdQVlMAw4FSVdF",
+  "UU1CH0JIEkNKBQBaU1ZSTVxIGB4GAh0cTkhJQRpvQU1GHRcQSRFCFwARCBMcW01eGAkQTxEcV1FXQRxFDh0RTltESwsNVlpSBw4JFQgCFxJUQF",
+  "5dShIaAAMKFkVADQIQAQFdH0EABgUESV9BGh4BCgQBUVFeUE5MWk0NJ086HFRKAEEJQRcKEgQERF1eCBFLDhkXBVxFCAMDSEYKEgEWRxtfCAkB",
+  "BBVKDQQACRFPBgIZBhUKFAMUFxITAlMdBVETWkcBCB4AQVNJCBFKFQgWWkcVDQwTSB9ZRlRAFFtSAgILFQgCFhJRXFhABhUbDglfQQgXSh9UU0",
+  "NGR09LEkcAAB4VDVBfRlkWRxx4TwICBjYYRFZUV19wRxpSBQ4WEQERVAgQXF5DAlpSHG0lCggJS0BRX1ReRwQVBkoBAB8bDUkQVENCCkEJQQgV",
+  "AA4ZWUsKEgEWRxxSFQhFGk0fXVNTW0VUXUFDWkcYQRB6A1dXVQsXBQQUDhUAQRZ6DRJTXV9ZAg8GW0dHQ1ZQXV1DW0VECA9IQQYHEgIcWEZVCR",
+  "FECRIXFV1FUVZQXV1ZXEVIFUwXFwILFR5KDVxfXFQWRw4CAAQMFRRKDQILEkVfBg8BCBMMDgNKDV1AU1JEExhSUElTEk0VTEFVCTsNRwMTAgwC",
+  "EwIFQ1YKEkNMAwgTDUoCEwwURFdeRhlODhMRDQJFABlQGQJAShEeVREKTUcXBg8RBQABBR0cX1ReV1dJT15IBB4QQFZPBklAUFBJUFVFAQQAHg",
+  "EER1NGURcdSEF6DRIQEhENR0FSQUdFQU0CTFZZU10AABMTBQ4ADxlYTltCUV1IRwAGQVJVRE1FHRccEkNKBQBaU1ZSTVxIGB4GAh0DV1ZbTUcX",
+  "Bg8RBQABBR0cX1ReV1dJUURQGQcVGwonGmtcBAACTwocQkUKCFNIAQ4ABEceQQIATFFZRkgXR1BJQRpvTwgXShJSR0VZCA9SGkcHAA4bSkBfR1",
+  "9JXUEcDgkAWk0SQkBUV0MXR1FJQQQQEx4fXwgQQl5ECRUXE1xFBwIeWQgQW19FAhMbFVxFAgIcQkAKEkdMFUlfTAoQFQgUBAkQTzsDAgYVQQUQ",
+  "FRkfQwhWXVJYFEwECBQMAwEVDUkQXURZCwgcBF1FUB0IDUFfXlhJRxcTE09ITAwTTldeRhgWRw4HFQsMDwhdQlRWQVRZXUFGER9eQRB6A1dXVR",
+  "xOCw4BBEceQR0fXltEW15DXUETAxQKDRgESAkQRl5dXUERAAsGSVxEXUoQGRFICRdaEgYDBEARX1dRH1hDFAQGTBMKEUFQHUJIGxgWRxMbBg8R",
+  "W01BG0JICRFaDgUGCV1FVV0AVQkQWlREAAkGW0dRUR0IFhJUW0JdCwALW0cDDQgIFhJRXlhKCUwbFQIIEldQTldeRlRfXEEYFBQRCAsJAFFfXE",
+  "VICRVIQQQADxkVXwkQXUFMBAgGGF1FT1hFFhJEQFBDFAgGCAgLW00fXVNTW0VUR09AEktFAgIcQkAQHANeXEEPa0kABgpdTl5fQVQXDw4EBBVF",
+  "Gk0fXVNTW0VUXUFDWkcGDgEfXwgQRFBfT0xfAAQGBAMEBAkQTzsnSQQVBkoAGAgDDUkQQl5eDhUbDglfQQwSXl1cR0VIXEEeBAERW01FHRcLEk",
+  "VCF1tSVFdAWk0EX1NeQVdCFQxIQRMXAAMDQVNEVxkAUlFXTUdIVF1VBAkQVlheFw0TGF1FBwEVVQkQVVBdXUERDQYIEUVCG0JIHhEYERZeQVNR",
+  "ERVZFhJAU1VJDg8VW0dXWR0IFhJfQlBODhULW0dVWk0RQ1tdU0VECA9IQQIcBB5dRFwQAx8ZFEFDT1YWQQgRXlcQVF5fEAAABRReQRkCTFxDW0",
+  "VECA9IQQgVAA4ZWUsQHAdeRwQTEgJeQRB6bVlVS1dfBgwXEkcAGAgDAFteEkoNARMdDEceQQIATFFZRkgXR1FJQRpFFQJQVhJfQlBODhULW0dU",
+  "Wk0NDU86HFRKAEwXGAIWQQRQVhJUW0JdCwALW0cHDQITRgkQQl5eDhUbDglfQR8VQVNEW0dIXEEFCAMRCVdQTl5RX0EFVVMCGUtFVRsHARIDBk",
+  "FVTlpSCQIMBgUEFxJTXlBAF0lDVRcdTU1CAwRGRR0NVVMCGU5eQQ8fX1ZVQBxfBgUbFBRfQVhACAk6EhFPBgIZBhUKFAMUFxJCU1VEBg1fBhUE",
+  "BQQVQ0YYV11BDhEBBEcEFU0TSFxEV0MBR0IUUwMGVgxQHRccEhJpXiNLUiRFVFhVARITClAbAVBAQVZVUUhZFjgQElNCH0wBCQYBDhpKDQIQAh",
+  "EcXxEKQVMVGU0CSlBRGgMcUE1DWVJJV11cAwYFGwoNBg8bDAYRCAIeFxJSXlhDDEFHEkdXT1sDDVteVFhDDhUXWkcYa0MVSlUdV0hIFEEbWwEM",
+  "Ex4EAFFYW11JRxpSEwgRABkVFxIIVlRKXEEPa0kABgpdSEtVQRFEXQ0TEhNIAgUZQVYQSRFfCBUTFQJfQUBISVdXCRFQbU8XBgBIBBQVXhJZCA",
+  "tMARUXE0ceQQ4fQ0ZVXEUXR0NQWkcVDh4ZWVtfXAsNBgMBDgsQFQhLDV5VVEUXR1RCRFxFFQIAFxIGFwoNBQ4GFQgIW01GCAkQRVhJEwlIQVVX",
+  "RFZQWUBRXEJLCBMfW0cREwweXl5RRlR1T0xHUUJMWk0STFFbVUNCEg8WW0dGUQ9ATwJRCRFPCBMWBBVIEwwUREdDCBEYV0RJQRpvIQYVVFRCU1",
+  "xIFEEQDQ4LCk0LDQIVHhEUVUReQVZVUUhQVhJEQFBDFAcdEwpfQR4TTF5VaxkcTlpSHEdcVEhQVhJEQFBDFAcdEwpfQR4TTF5VaxkDV1lbWkcY",
+  "QRB6A1dXVR9fAhcXAAsABU1eSFVXH1RUAhJSGkcKEQwTREZJCBEdR0AbDBcKExkRQ0YLElBDDgwTFQ4KD1dQQ11eVwoNFw4bDxMAE0AVW1deRk",
+  "IXRw8dDwJeQRB6JxxVVVYABAAABUceQR0fXltEW15DXUEABAsEFQQGSAkQRVhJEwlIQQoMD0VIG0RHHhEeUVECGUtFAgwcThoYAwEdEQlSTEdX",
+  "UV0AVRsQGBEDUFRbSFxFFQgIWR9RXlhKCVtSAgILFQgCFhJfQlBODhULW0dVWk0RQ1tdU0VECA9IQQQEEwldRFwQAx8ZFEFcVRRFBAwDSBJWXU",
+  "NaBhMWElxFHGdeSFVXH1JMFQUpCQ4BBQgecBJLElVEFBEeAB5fQQMfQ1cLEkwnJwoXGAEXAAAVXhJTU0NJSggcQRxFBx8fQBJLEl5dBgIbFR5f",
+  "QV1LDUZCU19eAQ4ADF1FEg4RQVcYHAgbTlpSHEcRDk0LDV1AU1JEExhIQVZeQRkCTFxDVF5fCltSDwgLBFZQUBJNOB9IAAZfEQ8KFQJQVhJRQU",
+  "FIBBVfEwYRCAJKDQEQHREZXEEQDhUBBB9KDQNAShFeCA0bBUcTAB9YAB9cW19ITlpSDhEAEwscQkUKEllEAwUXD1xFAwwTRlVCXURDA1tSFwYX",
+  "SUBdXVNeV10EXEEQDh9IEgURSV1HCBEdR1FSV1cVGU0CSlBRGgMcUE1DWVJJV11cAwMGGwoNGmtcBAACTB0YQkZfElhAAEEJQRAMBRkYFxIBAg",
+  "EIXEEaBA4CCRlKDQMAAhQWRw4QCwIGFUAWREYKElJCEQQAWkcBCB4AQVNJCBFPCw4RClxFAAMZQFNEW15DXUEXBgBIBwwUSBIeBEINAgABBEcH",
+  "DhkYFhJNOB9IAAZfFQIdFU0LDV9RQFZECUwGDhdfQVxGXUoLEldCCRVfEg4fBFdQHEBVXwoNBA4eDhVfQRsRXxodH1xYEwQWSFxFDQQeSB9YV1",
+  "hKDxVIQVZLVFZQUDgeV1ZKShUXGRNfWw8VS11CVxFWRwIdDxMADxlKDRASCRFJDhICDQYcW00SQV1TWQoNEAgWFQ9fQVlIXUoLEllIDgYaFV1F",
+  "UB0IFhJSU1JGABMdFAkBW00GTEAYHxxMBAIXDxNMWk0dTEBXW18XR1FSABIRDk1BG0JICRFQbU8XBgBIAwQXDUkQVlheFw0TGF1FAwEfTlkLEl",
+  "dCCRVfBwYICAEJFxISYEReFA5SLgkAQ0FQXlNeQRxeAhMbB1xFBwIeWR9DW0tIXUERDQYIEUVBAwFCV1wBR1UEFktFUENHX1ddGwoNCwgcBEoN",
+  "BAQXRUYKEgADVVpSAggJDh9KDURRQBkAShUXGRNMWk0dTEBXW18ABQ4GFQgIW01IXUoLEkwnbWsyDAIBCAxQBUJCV1dIFRJfEwIBFA4VSR9dXU",
+  "VECA9IQRUABRgTSBsQSTsNR08XBgBJQUMVSlUdUVBfA01STwICBkAARV1EXRFECgZSGkcEDwQdTEZZXV8XRw8dDwJeQQIATFFZRkgXR1BJQRpv",
+  "QU1eSFVXH1RUAhJSGkcEDwQdTEZZXV8XRw8dDwJeQQIATFFZRkgXR1BJQRpvQU1eSFVXH1RUAhJSCEceQQweRF9RRlhCCVtSDwgLBFZQUDgQEh",
+  "9IAAZIWwUABwICSBJLEkVfBg8BCBMMDgNKDVxfXFQWRxx4HG1KS01NEA8NDxH9+LHisca1xL3g/angqOG9XUGi2rfVsdKgl+KIEuGfR7HNsdm1",
+  "1b3C/YLgieGYR7HKQbbmsOWgl+KIEgwQWlxPQU1Ka0MATEVDEkoNAwgBEQsEGFdQS15VSgoNAAACW0dXERVLDV9RQFZECVtSTF8VGU1AFhJGW0",
+  "JEBQgeCBMcW00YRFZUV18WRw4CAAQMFRRKDQILEkVfBg8BCBMMDgNKDV1AU1JEExhST1QWQQgRXlccEkdEFAgQCAsMFRRQHUEQHAJeXEEPa0kV",
+  "ABoDA11eEkoNEQgBCAUMDQQEVAgQRFheDgMeBFxFDh0RTltESwsNVlpSFRUEDx4ZWVtfXAsNCBETAg4RGE1BAwRDElRMFAReQREMEgQSRF5ZRk",
+  "gNVxJJQRpvTx0RWkEeXV8DAA4cBEceQQIATFFZRkgXR1FJQQEMDRkVXwgQUF1YFUlHER9MWk0EX1NeQVdCFQxIQRQGAAEVBQMeAAQEXEEGEwYL",
+  "EgQERF1eCBFCFwARCBMcQVxeH0EQV1BeAk1SBw4JFQgCDQMeAEINAgABBEtFFR8RQ0FWXUNAR1BcUxRFBAwDSAkQTzsDFwAFQRxFAwwTRlVCXU",
+  "RDA1tSDwgLBFZQT11CVlRfXUFCWkcGFB8DQkAKEkFCDg8GBBVeQR0RSVZZXFYXR1kCGUdSERVLDVFfXl5fXUFRVAFQBFgRFhJcW19ISgkXCAAN",
+  "FVdQHQkQRkNMCRIbFQ4KD1dQTl1cXUMNSVBHEkcAAB4VARJWW11ZAhNST1ZQEk0VTEFVCRFQbU8CABBFEhsXDUkQRVhJEwlIQVVVERVLDVpVW1",
+  "ZFE1tSU1cVGVZQSVtDQl1MHltSAwsKAgZLDU86HEFMEEweQRQTBk0LDUBfRlBZAltSTFZRBQgXFhJNOB9dBhZfE0cWFwpQVhJCXUVMEwRIQVZR",
+  "BQgXFhJNOB9dBhZICQgTBB9QVhJTXV1CFVtSQlBSVltHHQkQTzsDFwAFWwEKAhgDAERZQVhPCwRSGkcKFBkcRFxVCBEcFxlSEggJCAlQW1NCGh",
+  "wABgIRBAkRSFZQQkdEXlhDAkwdBwEWBBlKDQBASgoNGmtcEQYSTwIbARIeQlBaSQ0bFUceQQ4fQV1CCBFbBhNaTEoEAg4VQ0YZCRFLDg0GBBVf",
+  "QQkCQkIdQVlMAw4FSVdFUU1GXUoQQFZPBklAUFBJUFVFAQQAHh8aUkhbWkcYa0MATEUeQVlMDARSGkcEDwQdTEZZXV8XRxETFkoWCQwbSBIeAQ",
+  "leRwQTEgJeQRB6bVlVS1dfBgwXEkcVABpdXlpRWVQNHEFCREtFUF1ACBJLEkVfBg8BBwgXDFdQQ11eVwoNGkFAUUJFGk0EX1NeQVdCFQxIQRMX",
+  "AAMDQVNEV2kFSlICGU5eQRBQGQIVEkoNExMTDxQDDh8dFxJEQFBDFA0TFQI9SV4AVRsLEkwNUVFXQRxFFR8RQ0FWXUNAXUEGEwYLEgERWVdoGh",
+  "wfFxlbWkcYQVVACBJLEkVfBg8BBwgXDFdQWUBRXEJBBhUXOU9XERVZFhJNEkwnbU8XBgBIBAwCXhJLEkFCFAgGCAgLW00RT0FfXkRZAlpSFQgV",
+  "W01AFhJCW1ZFE1tSUFUVGVZQWltURlkXR1dGER9eQQUVRFVYRgsNVFcCGVxFDhsVX1RcXUYXRwkbBQMAD1ZQT1NTWVZfCBQcBV1FDwIeSAkQUF",
+  "5fAwQAW0dVWk0ATFZUW19KXUFCWkcGFB8DQkAKEkFCDg8GBBVeQQ4fQV1CCBFbBhNaTEoEAg4VQ0YZCRFJDhICDQYcW00SQV1TWQoNGmtcBAAC",
+  "TAgRX0FrWlhJAwQcPEceQQkZXkJcU0gXRw8dDwJeQRB6A1dXVRxIBhMBQRQTBk0LDVZZQUFBBhhIQQUJDg4bFhJHW1VZD1tSV1MVGVZQRVdZVV",
+  "lZXUFBVxcdWk0NJxxVVVYAAgAAEkkVBAgbDUFGVRFWRwAcCAoEFQQfQwgQV1BfFEwCBAIOQVxeHEEQUURPDgJfAwIfCAgCBRwCHh8VS09ATVZM",
+  "QQ8fWVoLEkwnJwoXGAEXAAAVXhJVU0NeShEXBAxFGk0WX11dEkoNExMTDxQDDh8dFxJEQFBDFA0TFQI8SUBBHAIVGwoNGkEGDkceQRkCTFxDVF",
+  "5fCltSDwgLBFZQUBJNOB9IAAZfBAYXElcYQkRVQBFeEQZSGkcDCAEESEAKElVfCBFfEg8EBQIHBQIQAhEYFxlSEwAHAEVCHAUcAwkYS1dCTUlQ",
+  "SERLDU86HFRKAEwXABUWWwsfTkdDH0dEFAgQDQJFGk0fWEZcW19IXUFDER9FEgIcRFYQRFBfT0xfAAQGBAMEBAkQXURZCwgcBEoKBwsDSEYKEg",
+  "NdH1pSHG1LBAoXAFdRQEINSQQTE0oJQRZQWUBRXEJLCBMfTAgXCAoZQwgQAwddH0FLER9eQRB6A1dXVRxIBhMBQUkAAB9dXxJLEkVfBg8BBwgX",
+  "DEAfX1tXW18XR1VKER9FWB0IFhJNOB9IAAZfBAYXEkMEWltEUVkNSQQTE0oJQRZQTFxZX1BZDg4cW0cAAB9dWUVZRlJFR09FVBRFBAwDSB9ZXB",
+  "xCEhVJQRpvTwgXSh9VU0NeSRUFCBMGCU1eSFNCH0MNHEETDw4IABkZQlwKElRMFUwGFg4RAgVQAwUFQREDV1gBQQIEEghdRFwdXURZRxMXFwIX",
+  "EghLDU86clpIHgcAAAoAEk0VTEAdRkZEEwIaQRxFUUhcDQMAAhQNHEEGEwYLEgsfX18KEkNCEwAGBE9VSFZQUBIBBxQNHEEGEwYLEgsfX18KEk",
+  "NCEwAGBE9IUFoUSFUZCRFQR1JHREceQRkCTFxDVF5fCltSEwgRABkVBQtUV1YEXEEPQVJQRE0LDUZCU19eAQ4ADF1FEwIETEZVGhwcVAUXBk5e",
+  "QRBQGgcVEkoNExMTDxQDDh8dFxJCXUVMEwRaVwMABkRLDU8QTzttCgQWCAZFSR0CSFRVQEIAFQQWFAQABUAdQkZZXV8XRxMXBRIGBERQVjgQEh",
+  "9dBhYBTUdLEQwHXhxfXB0NSRETFhRLDgNeSl1eVxFWRxUAAAkWCBkZQlwKEl9CCQRJQRpvQU1eXVNHHEJFBgoXQRxFAAMZQFNEW15DXUEcDgkA",
+  "Wk0TQl5fQAsNRFkTVQZRVVZQUDgQEh9IAAZfBAYXEkMASFdbEkJbAE1STwICBkAVTEBDHEVaDhURCUdLBAwCAF4cEh9IAAZfBAYXEkMEWltEUV",
+  "kNSQQTE0oXQRZQTFxZX1BZDg4cW0cLDgMVFhJNOEwnbSEZBB4DEwwdSEEQV1ZKSgcTBQJFGk0WX11dEkoNCBETAg4RGFdQHQkQTxFZCEEJQQgV",
+  "AA4ZWUsKEgAWRxxSHG0FWmcTQlxDRhF9JjYtMjEiQVBQCg5DRFYNEQgXFiUKGVBSHRIAEgMZR1NGQ0cDCAEcEBBTR0NfAg8GIggJDh9SDVNCW1",
+  "AADwgWBQILXE8EX0dVEA8RFwAGCUcBXE89HAAQAwMDVQJfU0lcQV1dGBwGEgIDVExHT1FFVENGDQIQAx8aR1BcUkdXT1tQHxwIEgMDUUFDQVdF",
+  "UENIABwFEgMDX0xcVBRUT1VeGBICHAkDUgJDT1JFUU1CAwodHAgNVU9KTFVLV01AAAAeARwfSVZfVElTTFheGx8FHAdXRU5MXQIJDQQAXlcQUU",
+  "kQRVRcU0VFAhRNDwMAHAcPRxMKXEVUT1RSDUBJDxMfSVRQQRMXAAMDS11CXwwPFQ4GABMASUBBFRIFHAMNVlFcV05HTlNMSF5cW0FeAkERGVpH",
+  "WENDDxJTSwwPUU9BQ0cXGVBSHxAQQEgQRVNcVkVFFR8RQ0FWXUNAWkMADhMEFQhYAAQQCx8eR1dcUk5HTlNMSF5cW0FeAkERGVpHUFleGhAQUU",
+  "gQRVdcUkVFExVNDwASEkNUWkNAT1BHQRkCTFxDVF5fClxQEwgRABkVBQQQAwUDUEFET1RMQ0JOEVdcXlhdFARSAh9YQ1xIAwoSElJUWkNDUUlT",
+  "Q00CVQ8SAx8URUEAGFpHU0NFDxJEQFBDFAcdEwpYQx8fWVNEVxkcX0FDWUldQVxAAwQZEB4TW04BFwBbRlZ6Tl1eQUUNIiAgMjg2NypQEBIXDk",
+  "JbAEEECAISIwIIEBAAEgENUVVSUlFHQQsZQV4NEF9CCQRQQRQREwIbSA8SUURfFQQcFSQKDQICDxJDRkNCDARfFg4BFQVNDwMSEkJZFQ4ZBEoJ",
+  "CAMVR11ZXAwPFQ4HDwNHQR4EX11bVxxBDg8XAgYVXE8CQkdeVhMNBhMbAEoNCAkUSFwNEEVfEgRQX1sCQQ4cTEFDDxNIBhNfDUVbXR0RWVoQVg",
+  "wPKlRSU0cpU1tQHAYQfgAdR1JCQT1HQQsZQV4NEEdMFUlfTAUCSE9fEw5AU0VFRwVPQypUUU1JDX4BCxEcU09HQStUUE1CHxJqEBFeExMdCgJI",
+  "Dh0RTltESwwPSVRHQ0hbXUIXEw5XElJBBhIBXEUAAB9dXxAODkFMEwlSBVpHLFhJDQAQfgIVR1BGQStQVU1DHRJqEBFLDg0eXEUTAB9YAB9SVR",
+  "gPSF9OEQYRCU0UEBB9BwUNXkE+VVJFUFleGBJ8BwINVVNSO0VFEhkCQllVH15dBgIbFR5YQ0NFGBAfDA0CAF9OEQYRCU0UEBB9BhEdRyJHQVZV",
+  "QVxHDQMEEgIfR1BGQSRRVk1BGRIFCxEcV0FEUUdVQTdSDVRZXl0QRRcTE09ITA8XBBAQQUVfCAoXXEULDgMVDx0ODkFMEwlSBVpHLFlQHRJzBx",
+  "EcV0FDVkdUVU1DHxIBBhFuU1ZSUFNFVFRQHAIQBAENV0NdX1tKEhsXExULOFJCCRIGQSQpLj41cmFmdREQR0ZOEhECQRoZSUZYDxMcX0NSCQIM",
+  "BgUEEBABChMNEQgXFiUKGVBSHRIAEgAVR1BKQ0cDCAEcEBBeXV9IRUEBFRUKCghND1FFQENICRUxDgsKE09QXkZCXVpIShYbBRMNXE9BDxJRQF",
+  "hMSgkbBQMAD1BSWUBFVxMTWxETFQ9FBVBSYAAQAF0cU0FDVSpUV01CYQAQAwcPSF9OThQTBlNXFjg6UV5DFBVSEhNFXE0UQlFFX1RDE08REwIE",
+  "FQg1QVddV19ZT0MBFR4JBE9ZFjhDRh9ZAhkGIggLFQgeWRINEnJ+NFp4BQgGFAAVQ0YeWlRMA08TERcADwkzRVtcVhleE0hJa20GDgMDWRJ8Eg",
+  "wNT0hSXFlFNTY1A15RXFYFTjxSHRtFNUMCWAk6XlRZRxETFhRJQR0RWn4cEkFMEDNeQQIEEx5cDV1GHhFIHgQBTUcGAB8UARJZX1YBRwIeDhQA",
+  "IxkeARJTU0EWbQ0XFUcVDh5QEBIAHhFdBhYwFBQcQVBQS1NcQVQBRwQTExQnFB4JDQ8QVFBBFAReQQEKAhgDb1NTWREQRw8HDQteaw4fQ0FEEk",
+  "ZMDhVSXEcIEk1NExIYQFRJEgIXQVhFUU1KDV9DGwonBA4cEhNFDAZQEBIYRlBKS0ERDRRJQQUEQF4ZEgwTRxpSAggLEhlQQxINElVCBBQfBAkR",
+  "Tw4CSFNEV3RBAgwXDxNNFQwXBAkQW1cNTwIeEk5FD0MTQVNDQX9MCgRSXEcGDR5LDVtWEhlFEwweSEcLTwQeQ1dCemVgK0FPQQ8RDAFLDUBVRk",
+  "RfCUEcWkcYWmd6S0deUUVECA9SEwIDEwgDRRoZEkonR0ERDgkWFU0EDQ8QfhkEXGtSQQ4DQUUATEV8GxFWRxETFitLEggEbEZEQFhPEhUXSUUE",
+  "EwQRAF5RUFRBRU1SFUkVABo8BAkQQlBaNU8BBBMkFRkCRFBFRlQFRQAACAZIDQwSSF4SHhFZSRETFjVMWk0NJxIQW1cNTwQTExRMQQgRX0EeQV",
+  "RZJhUGEw4HFBkVBRBRQFhMSg0TAwIJQ0FQWRxVU0NeTlp4QUcMB01YQkQZEkonR0FSQQgTTx4VWXNERkNEBRQGBE9HAB8ZTB9cU1NIC0NeQRNL",
+  "BBQVXhsLOBENR0ERDQgWBC8EQxxDV0VsExUACAUQFQhYD1NCW1AACwAQBAtHTU0EA1FcXUJITlp4QUdFQQgJSEEeQVRZJhUGEw4HFBkVBRBRQF",
+  "hMSg0TAwIJQ0FQWRxVS1ReTlp4QUdFQQQdShxRXkUNWkEGTxcNDhkfFjgQEhENBAACTw4LDwgCZWZ9fhEQRxVcFQIdFVZ6DRJNOEwnIk8aDggO",
+  "EkMAWEFYGkNIARMXEg9MWmd6AhgQ47n917HBQVZfQb3M/YrggeGdt9yi2bfQQb3L/YzggeGTtuOi2bfasd1cDeKH4oH85bHHsdtFsdKgk+O/4o",
+  "P93LD9sOm047zx/L0Q4or917HNsd212U1aAjhZVBEFRhMXBRIGBERQVjgQEl1CAA4iCARLEhkJQVceU19ECgAGCAgLQVBQD1xfXFQPXEEEDg4B",
+  "QQEfSl1gW1IDCAcUEgIRNgQUWVoLOBENCw4VDjcMAkMDWUtcVx9MCQgfABMMDgNQEBISXl5KCEwUDQ4GCggCDQMeA0INAgABBEoKFBlQT11EWh",
+  "MWbRx4EgIRNQQdSF1FRhkFTkFPX0cea01QXVNHfhEQRwwZSUUHFBkEQlwSHhEPFwAFQRcEFkAcDx4QYnB6ODIkJk5eQR0RWn4eRkhdAkFPQUUH",
+  "FBkEQlwSCTsNRxETFjVFXE0dRhoSUERZEw4cQ0tFQx0RWhJAU0YAFUNeQTckNjIje3UZCRFdBhYgTxMcEQhQEBISUERZEw4cQ1xvQU0ATEVDEg",
+  "wNCgpaQwMMF09cDRBAU0ZeRUhJa0dFEQwHXhxRQkFICQVaEQYSLUFQXVNHYBgWbUFSBQgGFAAVQ0YeQ0RIFRghBAsAAhkfXxoSVF5CEwQAQUkD",
+  "DgIEDxseU0FdAg8WIg8MDQlYXVNHQRgWbUFSEQYSLUMRSVZ1RFRDEy0bEhMADwgCBRBTXlhODENeQU9MQVBODUJCV0JeT0MeQ05MWmdQDUJRRW",
+  "MDBgUWJBEADxk8REFEV19IFUlQAgsMAgZSARIYGxEQWUECEwIWEkVSXxAZGwonR0EABAEXBB4YBRsLOBENFQQDFAIWFSweRF9RRlhCCScAAAoA",
+  "SUVZDQ8OEkNIFhQXEhMkDwQdTEZZXV9rFQAfBE9NSE1NExJAU0ZeSQIeABQWLQQDWRxRVlUFRQ4cQ05MSFZ6UB4QRVBEE0lDUFdVSERLJzgfGB",
+  "H877HCsdRFU1dQ/Y3gjOCttu6i1bfbsddQ/Y/gguGbt9Gj47fdsdRQBx06VERDBBUbDglFEgURRlcYGxFWbUFSOhcEFiFcDUJRRWNwSQcdEyIE",
+  "AgVYTxINDBFWbUFSQUcHTw4cTEFDflheE08ABAoKFwhYD0FYU1pIRUhJQREKCAlQTxxfVFdeAhUlCAMRCVZQTxxTXlBeFC0bEhNLAAkUBRBDWl",
+  "BGAkNbWm1FQU1QXldEZlhAAg4HFU9NSE1NExJSHFJBBhIBLQ4WFUMCSF9fRFQFRRIaAAwAQ0RcDQYCAhgWbUFSHE5eaxB6S0deUUVECA9SERUA",
+  "Eh5YXltUVxgNHGtSQQ4DQUUATEVyR0JUTkEABBMQEwNLJxIQUV5DFBVSAxMLQVBQXltUVxEQWlxSQwtHQVJQXVNHfhEXRxETFjVea01QRFQQGk",
+  "JEAwRSQFpYQT41fGlAXUJwTkEJQRcKEk1NDQILEkJFBgoXSU5eQR8VWUdCXAoNGmtSQRcKEkZbFjgQElhLR0kCDhRFXU0jaGMeXlRDABUaSEce",
+  "a01QDRJSRl8DBA0TEhQpCB4EA1NUVhkPCApQSFxvQU1QDUFVRmVECgQdFBNNSURQEAwQUEVDSQIeABQWLQQDWRxCV1xCEQRaQwgOQ0RcDQAGAh",
+  "gWbUFSHEcADR4VDUk6EhENRwcbDw4WCUVZFjgQEkwnGmsUFAkGFQQfQxJWW19EFAlaSEcea01QXVNHcEReHkFPQRMXFAhLJxIQQlBaK08RDQYW",
+  "EiEZXkYeU1VJT0MeCBNHSFZQXVNHYB9OCwABEisMEhleTFZUGhNBDhVQSFxvQU0DSEZkW1xICBQGSU9MQVBODUk6EhENRxETFhRLAgERXkF8W0",
+  "JZSQAWBU9HBgIeSBAZCTsNR0FSEgIRNQQdSF1FRhkFTkFPX0ceQR0RWkEeQFRACBcXSU5eQR4YQkV1U0NeT0hJQRpJQRoRREYYAwIdV0hbWm1F",
+  "QRBcDUVRW0UFX1FCSE5eaxB6Jx0aEuClt9Gi0kdWW02hruO44ov930Gi00e10L3L/YzgiOGYR6PZscC04rzy/L4Q4oD92bHJsOu06b3FDeKOEu",
+  "GQt9Gj4KXeQUdfJ1RFXFJZDg4cQRQNDho1TEBDGhgNHGtSQQIEEx5QEBJdWRkPBRQGFQgLQ0FQD1dXVRxIBhMBQ0tFJCwifm1jZHYEXEEXABUW",
+  "TxkJXVcQDxEPBRQGFQgLQ1Z6DRJUXVJYCgQcFUkUFAgCVGFVXlROEw4ASUVLDAICSBAZHEFfAhEXDwNNBAwCXhsLOBENAgAAEkkEBQk1W1deRn",
+  "1EFBUXDwIXSU8TQVtTWRMBR0lbQVpbQRZ6DRIQElhLR0kXABUWIxgDVBsQQFRZEhMcWm1FQU1QSFNCQXNYFBhSXEcRExgVFjgQEhENAgAAEkkG",
+  "DQwDXn5ZQUUDFQQfDhEASU8EWltEUVkPTlpSFwgMBU0VTEBDHF5LARIXFTAMBRkYFhJVU0NeSQIeABQWLQQDWRxRVlUFRRUFCBMGCU9ZFjgQEh",
+  "ENFAQGNQ4IBAIFWRoYGxEQWUEJQQIEEx5eTl5RQUJhDhIGTxUADAIGSBoSRkZEEwIaQ05eQQgRX0FyR0JUR1xSBwYJEghLDV1AV19iEUlbWkcY",
+  "TU0HTFtEGgkdV0hbWm1FQRBZFjgQEkNIARMXEg9NSFZ6DRJVU0NeSQIeABQWLQQDWRxRVlUFRREXBAxHSFZ6UDg6HRsNtuyi27blsd2gkBLhsx",
+  "H91LHJsde11r3A/Y7gihH930Gj5bfbsO+gkxIaHTtLEg8RFQ4KD00SWFtcVn5bT0hSGm1FQQIGDQ8QX1oFRQUbF0VJQU8VSlUSGwonR0EdF0kN",
+  "CAkUSFwQDxFZFRQXWkcKF0MDSEZxRkVfDgMHFQJNQx8fQVcSHhEPAwgTDQgCQ0RLDV1GHEJIEyAGFRUMAxgESBoSU0NEBkwfDgMEDU9cDRBEQE",
+  "RIRUhJa0dFAgEfXldyRl8NWkEfCk9HAxgEWV1eEB0NRQQVBkoGDQIDSBAcEnJhKDI3PjQzJkRLDVFcXUJIJRUcTxMcEQhQEBISUERZEw4cQ1xv",
+  "QU0VVFdDEgwNCgpaQwUQFRkfQxAcEhNIAAZfBB4AEk9cDRAMWw8RSAhMXQ5bXUIZExAZCRFIHgQBTxMcEQhQEBISUERZEw4cQ1xvQU0TTEBUEg",
+  "wNCgpaQwEMBhgCSBAcEhNIAAZfAgYXBU9ZFjgQElJMFQVcCQ4BBQgeDQ8QRkNYAlp4QUcGDgMDWRJAWhEQRwwZSUUBCBtSARISV1ZKShEaDhMK",
+  "Q0RLJxIQW1xKR1xSBQgGFAAVQ0YeUUNIBhUXJAsADAgeWRoSW1xKRUhJQQ4IBkMDX1EQDxF9Ly4mLlxvQU0ARRxRQkFICQUxCQ4JBUUZQFUZCT",
+  "sNRwITEUdYQQAbBRBWW1ZOBhEGCAgLQ0FQD1dXVRxZAhkGQ05ea01QTlNCVh9MFxEXDwNNEQVcDVFRQhgWbUFSDhFLAB0ASFxUGlJBCBIXIxML",
+  "TU0VVFdDHhFOBhMWSFxvQU0UQlFFX1RDE08QDgMcTwwAXVdeVnJFDg0WSQgTSFZ6DRJVS1ReSQAWBSITBAMEYVtDRlRDAhNaQwQJCA4bDx4QGh",
+  "gNWl9SGkcKF0MTQVNDQX1EFBVcAAMBSU8CSERVU11IA0NbWkcGAB8UA1pZVlVICUFPQQEEDR4VFhJTXl5eAiMGD0kDDg4FXhoZCRFQTlp4QUcG",
+  "DQIDSHBEXB9MAwU3FwILFSEZXkZVXFRfT0MRDQ4GCk9cDVFcXUJIKBdbWm1FQQIGA1NUVnRbAg8GLQ4WFQgeSEAYEFJBDgIZQ0tFBE1NExJLEl",
+  "hLR0kXTxMEEwoVWRINDwwNCBdSR0FFQA4RX1YeWlhJAwQcSEcGDQIDSH1GGhgWRxxbWm1FQQkfTkddV19ZSQAWBSITBAMEYVtDRlRDAhNaQwwA",
+  "GAkfWlwSHhFIR1xMQRxvQU1QDVtWEhlCEU8aCAMBBANZDUBVRkRfCVp4QUdFQQQWDRpVHFpIHkFPXFpFQygDTlNAVxMERwIeDhQALhtYBAk6Eh",
+  "ENRwQeEgJFCAtQBVceWVRUR1xPXEdHNQwSDxsQSTsNR0FSQUcGDgMDWRJZRlRAFEFPQSYXEwwJA1RCXVwFCBdcEBIAExQjSF5VUUVCFSAeDU9H",
+  "AxgEWV1eEBgESQcbDRMAE0USDQ8OElMDCAcUEgIRMQwCSFxEEhAQWkEcFAsJSFZ6DRIQEhENDgdSSUYMFQgdXhxcV19KEwlbQRUAFRgCQwk6Eh",
+  "ENR0FSAggLEhlQTEYQDxFEEwQfEkkMDwkVVX1WGlVCBBQfBAkRTwwTWVtGV3RBAgwXDxNMWmdQDRIQEhFISREABBEADxk0SFRRR11ZT0hJa0dF",
+  "QU1QDVtEV1xePEkTFUdOQUUVA0FYW1dZLAQLQVhFTFxQFxIBGxEGRwgGBAoWTwEVQ1VEWhgNQkEbFQIIEkMcSFxXRllwSQcdAhIWSURLJxIQEh",
+  "FQbUFSHE5ea01QX1dWQFReD0lbWm0YawsFQ1FEW15DRw4CBAkqF0VZDUk6EhFEAUFaQAgTSE0SWFtcVn5bT0hJa0dFCAtQBRNfRB9FDgUWBAlM",
+  "QR8VWUdCXAonR0EUDgQQEi8RTlkQDxFJCAIHDAILFUMRTkZZRFRoCwQfBAkRWmdQDV1GHFlEAwUXD0dYQQsRQUFVCTsNRw4ETwQJAB4DYVtDRh",
+  "9fAgwdFwJNQx8VW1dRXlRJRU1SQwAJDhpSBAk6EhFOBhMWTw8MBQkVQxINEkVfEgRJa0dFBQITWF9VXEUDBQ4WGEkWFRQcSBxfRFRfAQ0dFkdY",
+  "QU8YRFZUV18PXGtSQRUAEBgVXkZxXFhABhUbDgkjEwwdSBoYGxEQWUEABBYQBB4EbFxZX1BZDg4cJxUEDAhYBRsQDw8NCBdcAgsEEh48REFEHF",
+  "BJA0lQBgsKFk9ZBBsLOBENAhgXEkkDDg4FXhoZCTtQbQcHDwQRCAIeDVFcXUJIKBdaSEcea01QQkQeWlhJAwQcQVpFFR8FSAk6EhFCEU8RDQYW",
+  "EiEZXkYeQFRACBcXSUUXBBsVTF5VVhMBR0MVDQgSQ0RLJxIQVl5OEgwXDxNLAwIUVBxDRkhBAk8dFwIXBwEfWhINEhMPXGtSQQ4DQUUWQlFFQX",
+  "NMBApSR0FFBwITWEFyU1JGSQcdAhIWSE0WQlFFQXNMBApcBwgGFB5YBAk6Tzs="
+].join("");
+const dec = b => {
+  const k = "amp-2021-garage", r = atob(b), u = new Uint8Array(r.length);
+  for (let i = 0; i < r.length; i++) u[i] = r.charCodeAt(i) ^ k.charCodeAt(i % k.length);
+  return new TextDecoder().decode(u);
 };
-const egg = document.getElementById("egg");
-const eggClose = document.getElementById("egg-close");
-const eggEyes = document.getElementById("egg-eyes");
-const eggCard = document.getElementById("egg-card");
-const eggImg = document.getElementById("egg-img");
-const logoPic = document.querySelector(".brand img");
-const paws = document.getElementById("paws");
-const pawBtns = { l: document.getElementById("paw-l"), r: document.getElementById("paw-r") };
-const ears = document.getElementById("egg-ears");
-const PAW_SEQ = ["l", "r", "l", "l", "r"]; // левая, правая, левая, левая, правая
-let eggStage = 0;   // 0 — ничего не найдено, 1 — видны лапки, 2 — видны ушки (хранится только до перезагрузки страницы)
-let pawPos = 0, pawBusy = false, earsBusy = false;
-let eggTaps = [], eggFocus = null, eggTimer = null;
-
-function updateEggTexts() {
-  const t = EGG_UI[lang];
-  egg.setAttribute("aria-label", t.eyes);
-  eggClose.setAttribute("aria-label", t.close);
-  eggEyes.setAttribute("aria-label", t.eyes);
-  eggImg.alt = t.photo;
-  pawBtns.l.setAttribute("aria-label", t.pawL);
-  pawBtns.r.setAttribute("aria-label", t.pawR);
-  ears.setAttribute("aria-label", t.ears);
-}
-/* Шаг 1: три нажатия на логотип → мигание → появляются лапки */
-function beginEgg() {
-  if (eggTimer) return;
-  if (!reduceMotion) {
-    logoPic.style.animation = "none"; void logoPic.offsetWidth;
-    logoPic.style.animation = "logo-flicker 1.1s ease-out both";
-  }
-  eggTimer = setTimeout(() => {
-    eggTimer = null;
-    eggStage = 1;
-    pawPos = 0;
-    paws.classList.add("on");
-  }, reduceMotion ? 0 : 1100);
-}
-
-/* Шаг 2: лапки в подвале */
-function shakePaws() {
-  [pawBtns.l, pawBtns.r].forEach(b => {
-    b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
-    setTimeout(() => b.classList.remove("shake"), 420);
-  });
-}
-function pawPress(side) {
-  if (eggStage !== 1 || pawBusy) return;
-  const btn = pawBtns[side];
-  if (side !== PAW_SEQ[pawPos]) { pawPos = 0; shakePaws(); return; }   // ошибка: всё сначала
-  pawPos++;
-  if (pawPos < PAW_SEQ.length) {
-    btn.classList.add("ok");
-    setTimeout(() => btn.classList.remove("ok"), 260);
-  } else {
-    finishPaws();
-  }
-}
-function finishPaws() {
-  pawBusy = true;
-  const wait = ms => reduceMotion ? 0 : ms;
-  pawBtns.l.classList.add("lit"); pawBtns.r.classList.add("lit");
-  setTimeout(() => {
-    paws.classList.add("gone");
-    setTimeout(() => {
-      paws.classList.remove("on", "gone");
-      pawBtns.l.classList.remove("lit"); pawBtns.r.classList.remove("lit");
-      eggStage = 2;
-      showEars();
-    }, wait(1300));
-  }, wait(800));
-}
-pawBtns.l.addEventListener("click", () => pawPress("l"));
-pawBtns.r.addEventListener("click", () => pawPress("r"));
-
-/* Шаг 3: ушки в блоке «Чуть больше о нас» → дёргаются → экран с глазами */
-function showEars() {
-  ears.hidden = false;
-  ears.classList.remove("peek"); void ears.offsetWidth; ears.classList.add("peek");
-}
-ears.addEventListener("click", () => {
-  if (earsBusy) return;
-  earsBusy = true;
-  ears.classList.remove("twitch"); void ears.offsetWidth; ears.classList.add("twitch");
-  setTimeout(() => {
-    ears.classList.remove("twitch");
-    earsBusy = false;
-    openEgg();
-  }, reduceMotion ? 0 : 800);
-});
-
-/* Экран пасхалки: темнота, глаза, фото (внутри ничего не менялось) */
-function openEgg() {
-  if (!egg.hidden) return;
-  eggFocus = document.activeElement;
-  egg.hidden = false;
-  egg.classList.remove("revealed", "glow");
-  eggCard.hidden = true;
-  document.body.style.overflow = "hidden";
-  requestAnimationFrame(() => requestAnimationFrame(() => egg.classList.add("glow")));
-  eggEyes.focus();
-}
-function revealEgg() {
-  egg.classList.add("revealed");
-  eggCard.hidden = false;
-  eggClose.focus();
-}
-function closeEgg() {
-  egg.hidden = true;
-  egg.classList.remove("revealed", "glow");
-  document.body.style.overflow = "";
-  if (eggFocus && eggFocus.focus) eggFocus.focus();
-}
+let taps = [], opened = false;
 document.querySelector(".brand").addEventListener("click", e => {
-  if (eggStage !== 0 || eggTimer) return;   // пасхалка уже начата, логотип работает как обычная ссылка
+  if (opened) return;
   const now = Date.now();
-  eggTaps = eggTaps.filter(t => now - t < 1500);
-  eggTaps.push(now);
-  if (eggTaps.length >= 3) { eggTaps = []; e.preventDefault(); beginEgg(); }
-});
-eggEyes.addEventListener("click", revealEgg);
-eggClose.addEventListener("click", closeEgg);
-egg.addEventListener("click", e => { if (e.target === egg && !eggCard.hidden) closeEgg(); });
-document.addEventListener("keydown", e => {
-  if (egg.hidden) return;
-  if (e.key === "Escape") closeEgg();
-  else if (e.key === "Tab") {
-    const items = Array.from(egg.querySelectorAll("button")).filter(b => b.offsetParent !== null);
-    if (!items.length) return;
-    const at = items.indexOf(document.activeElement);
-    e.preventDefault();
-    items[(at + (e.shiftKey ? -1 : 1) + items.length) % items.length].focus();
-  }
+  taps = taps.filter(t => now - t < 1500);
+  taps.push(now);
+  if (taps.length < 3) return;
+  e.preventDefault();
+  opened = true;
+  try {
+    new Function("E", dec(Q))({ lang: () => lang, reduce: reduceMotion, logo: document.querySelector(".brand img"), hooks: U });
+  } catch (err) { opened = false; taps = []; }
 });
 
 let saved = "ru";
