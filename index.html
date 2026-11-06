@@ -4,28 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-/* ===== СЕЗОНЫ: включаются сами по датам, каждый год ===== 
-   1 сен – 14 сен   первые листья (обычные цвета, мало листьев)
-   15 сен – 22 ноя  ОСЕНЬ (24 окт – 2 ноя дополнительно Хэллоуин)
-   23 ноя – 30 ноя  первый снег (обычные цвета, мало снежинок)
-   1 дек – 14 янв   ЗИМА
-   Остальное время — обычный вид.
-   Адрес ?season=halloween | autumn | leafhint | off | snowhint | winter включает режим вручную.
-   Сезон меняется сам, без твоего участия. */
+/* ===== СЕЗОНЫ: включаются сами по датам, каждый год =====
+   1 сен – 14 сен    первые листья (обычные цвета, мало листьев)
+   15 сен – 23 окт   ОСЕНЬ
+   24 окт – 2 ноя    ОСЕНЬ + Хэллоуин
+   3 ноя – 30 ноя    подготовка к зиме (цвета чуть холоднее обычных, лёгкий снег)
+   1 дек – 14 дек    предновогодняя зима (синие цвета, много снега, сугробы, ёлки)
+   15 дек – 14 янв   НОВЫЙ ГОД (гирлянда, леденцы, поздравление)
+   15 янв – 31 авг   обычный вид
+   Адрес ?season=halloween | autumn | leafhint | snowhint | winter | xmas | off включает режим вручную. */
 (function () {
-  var CLASSES = { winter: ["winter"], snowhint: ["snowhint"], autumn: ["autumn"], halloween: ["autumn", "halloween"], leafhint: ["leafhint"], off: [] };
+  var CLASSES = { xmas: ["winter", "xmas"], winter: ["winter"], snowhint: ["snowhint"], autumn: ["autumn"], halloween: ["autumn", "halloween"], leafhint: ["leafhint"], off: [] };
   window.setSeason = function (m) {
     var r = document.documentElement.classList;
-    ["winter", "snowhint", "autumn", "halloween", "leafhint"].forEach(function (c) { r.remove(c); });
+    ["winter", "xmas", "snowhint", "autumn", "halloween", "leafhint"].forEach(function (c) { r.remove(c); });
     (CLASSES[m] || []).forEach(function (c) { r.add(c); });
   };
-  var q = location.search.match(/[?&]season=(halloween|autumn|leafhint|off|snowhint|winter)/);
+  var q = location.search.match(/[?&]season=(halloween|autumn|leafhint|off|snowhint|winter|xmas)/);
   var d = new Date(), md = (d.getMonth() + 1) * 100 + d.getDate(), m = "off";
-  if (md >= 1201 || md <= 114) m = "winter";
-  else if (md >= 1123 && md <= 1130) m = "snowhint";
-  else if (md >= 1024 && md <= 1102) m = "halloween";
-  else if (md >= 915 && md <= 1122) m = "autumn";
-  else if (md >= 901 && md <= 914) m = "leafhint";
+  if (md >= 1215 || md <= 114) m = "xmas";
+  else if (md >= 1201) m = "winter";
+  else if (md >= 1103) m = "snowhint";
+  else if (md >= 1024) m = "halloween";
+  else if (md >= 915) m = "autumn";
+  else if (md >= 901) m = "leafhint";
   window.setSeason(q ? q[1] : m);
 })();
 </script>
@@ -384,7 +386,7 @@ html.winter footer, html.autumn footer { position: relative; overflow: hidden; p
 html.winter footer .wrap, html.autumn footer .wrap { position: relative; z-index: 2; }
 html.winter footer::after, html.autumn footer::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 88px; pointer-events: none; z-index: 1; background-repeat: no-repeat; background-size: 100% 100%; background-position: center bottom; }
 .holiday { display: none; color: var(--hl); }
-html.winter .holiday-ny, html.autumn .holiday-au, html.halloween .holiday-hw { display: inline; }
+html.winter:not(.xmas) .holiday-pre, html.xmas .holiday-ny, html.autumn .holiday-au, html.halloween .holiday-hw { display: inline; }
 html.halloween .holiday-au { display: none; }
 .snow { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
 
@@ -398,8 +400,14 @@ html.winter .nav::after, html.winter .section::before { content: ""; position: a
 html.winter .nav::after { top: 100%; }
 html.winter .section::before { top: -1px; z-index: 1; }
 html.winter .contacts { position: relative; }
-html.winter .contacts::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: repeating-linear-gradient(-45deg, #E0434E 0 12px, #fff 12px 24px); }
+html.xmas .contacts::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: repeating-linear-gradient(-45deg, #E0434E 0 12px, #fff 12px 24px); }
 html.winter footer::after { background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221200%22 height=%2284%22 viewBox=%220 0 1200 84%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 40C120 20 200 50 340 34C480 18 560 52 700 36C840 20 960 50 1200 28V84H0Z%22 fill=%22%23B9CDE6%22/%3E%3Cpath d=%22M0 60C150 44 260 70 420 56C580 42 700 72 860 58C1000 46 1100 66 1200 54V84H0Z%22 fill=%22%23F2F6FB%22/%3E%3C/svg%3E"); }
+
+/* ПОДГОТОВКА К ЗИМЕ: цвета чуть холоднее обычных (лёгкий снег добавляет скрипт) */
+html.snowhint { --bg: #1A1D22; --panel: #23272D; --line: #363C45; --muted: #8C929B; --text: #E3E6EA; }
+html.snowhint .nav { background: rgba(26, 29, 34, 0.85); }
+html.snowhint .hero::after { background: linear-gradient(to bottom, rgba(26,29,34,0) 45%, var(--bg) 100%); }
+html.snowhint .lb { background: rgba(26, 29, 34, .97); }
 
 /* ОСЕНЬ */
 html.autumn { --bg: #1F150F; --panel: #2B1D14; --line: #4B3423; --muted: #BA9F86; --text: #F5E9D6; --hl: #F5922F; --hl2: #E8BC4A; }
@@ -660,6 +668,7 @@ html.halloween .deco.k-pk .di svg { animation: jack 3.2s ease-in-out infinite; }
 <footer>
   <div class="wrap foot">
     <span data-i18n="footer">© 2026 The Lost Amp, Казань</span>
+    <span class="holiday holiday-pre" data-i18n="pre">Скоро Новый год!</span>
     <span class="holiday holiday-ny" data-i18n="ny">С Новым годом!</span>
     <span class="holiday holiday-au" data-i18n="au">Тёплой осени!</span>
     <span class="holiday holiday-hw" data-i18n="hw">С Хэллоуином!</span>
@@ -738,6 +747,7 @@ const EN = {
   "contacts.title": "Contacts",
   "contacts.text": "For shows and collaborations, email us or message us on social media.",
   "contacts.vk": "VK",
+  "pre": "New Year is coming!",
   "ny": "Happy New Year!",
   "au": "Cozy autumn!",
   "hw": "Happy Halloween!",
@@ -1227,6 +1237,7 @@ applyLang(saved === "en" ? "en" : "ru");
 
   function mode() {
     var c = root.classList;
+    if (c.contains("xmas")) return "xmas";
     if (c.contains("winter")) return "winter";
     if (c.contains("snowhint")) return "snowhint";
     if (c.contains("halloween")) return "halloween";
@@ -1440,12 +1451,12 @@ applyLang(saved === "en" ? "en" : "ru");
     put(g, "pk", pk, "width:28px;left:78px;bottom:12px;", pkc);
     stat(g, A.front, "width:130px;left:0;bottom:0;");
   }
-  function winterDecor(mob) {
+  function winterDecor(mob, xmas) {
     var foot = document.querySelector("footer"), sc = box(foot, "scene");
     if (mob) {
       put(sc, "tree", A.tree, at(54, 0.03) + "bottom:-7px;");
       put(sc, "snow", A.snow, at(96, 0.27) + "bottom:6px;");
-      put(sc, "cane", A.cane, at(17, 0.52) + "bottom:-4px;");
+      if (xmas) put(sc, "cane", A.cane, at(17, 0.52) + "bottom:-4px;");
       put(sc, "snow", A.snow, at(84, 0.76) + "bottom:6px;");
       put(sc, "tree", A.tree, at(44, 0.98) + "bottom:-7px;");
     } else {
@@ -1454,8 +1465,10 @@ applyLang(saved === "en" ? "en" : "ru");
       put(sc, "tree", A.tree, at(70, 0.06) + "bottom:-8px;");
       put(sc, "tree", A.tree, at(54, 0.93) + "bottom:-8px;");
       put(sc, "tree", A.tree, at(40, 0.13) + "bottom:-6px;");
-      put(sc, "cane", A.cane, at(20, 0.38) + "bottom:-4px;");
-      put(sc, "cane", A.cane, at(20, 0.62) + "bottom:-4px;");
+      if (xmas) {
+        put(sc, "cane", A.cane, at(20, 0.38) + "bottom:-4px;");
+        put(sc, "cane", A.cane, at(20, 0.62) + "bottom:-4px;");
+      }
     }
   }
 
@@ -1492,7 +1505,7 @@ applyLang(saved === "en" ? "en" : "ru");
     var old = hero.querySelector(".garland");
     if (old) old.remove();
     bulbEls = [];
-    var m = mode(), win = m === "winter", aut = m === "autumn" || m === "halloween";
+    var m = mode(), win = m === "xmas", aut = m === "autumn" || m === "halloween";
     if (!win && !aut) return;
     ensureDefs();
     var W = hero.clientWidth || innerWidth;
@@ -1584,14 +1597,14 @@ applyLang(saved === "en" ? "en" : "ru");
   function sync() {
     var m = mode();
     ensureDefs();
-    if (m === "winter") setFall("snow", 1);
-    else if (m === "snowhint") setFall("snow", 0.2);
+    if (m === "winter" || m === "xmas") setFall("snow", 1);
+    else if (m === "snowhint") setFall("snow", 0.22);
     else if (m === "autumn" || m === "halloween") setFall("leaf", 1);
     else if (m === "leafhint") setFall("leaf", 0.3);
     else setFall("", 0);
     clearDecor();
     if (m === "autumn" || m === "halloween") autumnDecor(m === "halloween", smallMQ.matches);
-    else if (m === "winter") winterDecor(smallMQ.matches);
+    else if (m === "winter" || m === "xmas") winterDecor(smallMQ.matches, m === "xmas");
     garland();
     hallow();
   }
